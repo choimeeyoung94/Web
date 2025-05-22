@@ -26,5 +26,18 @@
         <datalist> 태그 내부에는 <option value="값"> 형태의 태그를 이용해 여러 값을 나열할 수 있습니다.
   -->
 
+  <form action="/datalist">
+    <input type="text" name="email" placeholder="계정">
+    <span>@</span>
+    <input type="text" name="email" placeholder="메일 서버" list="mailserver">
+    <datalist id="mailserver">
+      <option>naver.com</option>
+      <option>gmail.com</option>
+      <option>kakao.com</option>
+    </datalist>
+    <br>
+    <input type="submit" value="제출">
+  </form>
+
 </body>
 </html>
