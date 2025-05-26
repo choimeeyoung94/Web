@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex</title>
+  <style>
+    div {
+      box-sizing: border-box;
+    }
+    .container1 {
+      width: 202px;
+      height: 202px;
+      border: 1px solid gray;
+      display: flex;/*플렉스 컨테인너로 만든다*/
+      flex-direction: row; /*방향: row(행, 디폴트), column(열)*/
+      flex-wrap: nowrap;/*아이템 줄 바꿈 여부: nowrap(안함, 디폴트), wrap(함)*/
+    }    
+    
+    .container1 > div {
+      width: 100px;
+      height: 100px;
+      border: 1px solid red;
+    }
+
+    .container2 {
+      width: 500px;
+      height: 200px;
+      border: 1px solid gray;
+      display: flex;/*플렉스 컨테인너로 만든다*/
+      justify-content: center; /*주축*/
+      align-items: center; /*교차축*/
+    }
+
+    .container2 > div {
+      width: 100px;
+      height: 100px;
+      border: 1px solid red;
+   
+    }
+  </style>
+</head>
+<body>
+  <!--
+    flex box
+
+    1.css에서 사용하는 layout 모델 중 하나
+    2.컨테이너 안의 아이템들을 효율적으로 배치, 정렬 등의 작업을 할 수 있도록 한다
+    3.기존 레이아웃 기술 float, display, position 등의 복잡성 및 한계 극복을 위해 도입
+    4.기본 개념
+      1차원 레이아웃 모델: 한 번에 한 방향으로 아이템들을 배치하는 방법
+    5.구성 요소
+      1) 플렉스 컨테이너
+         display: flex; 또는 display: inline-flex를 지정한 요소
+      2) 플렉스 아이템
+        플렉스 컨테이너 내부의 자식 요소
+    -->
+    <div class="container1">
+      <div>box1</div>
+      <div>box2</div>
+      <div>box3</div>
+    </div>
+    <hr>
+    <div class="container2">
+      <div>box4</div>
+      <div>box5</div>
+      <div>box6</div>
+    </div>
+</body>
+</html>

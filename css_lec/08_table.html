@@ -26,16 +26,17 @@
       
       
       
+      
     }
     .members td:nth-child(2) {
       width: 400px;
-
+      
     }
     .members td:nth-child(3) {
       width: 500px;
 
     }
-    .members tbody tr:nth-child(2) {
+    .members tbody tr:nth-child(1), .members tbody tr:nth-child(3) {
       background-color: antiquewhite;
     }
     .members tr {
@@ -92,6 +93,113 @@
         <td>4000</td>
       </tr>
     </tfoot>
+  </table>
+
+  <style>
+        .title {
+      font-weight: 900;
+      text-align: center;
+    }
+    .title > .month {
+      font-size: 48px;
+      color: blue;
+    }
+    .calendar {
+      border-collapse: collapse;
+      margin: 10px auto;
+    }
+    .calendar td {
+      box-sizing: border-box;
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+      padding: 10px;
+      vertical-align: top;
+      font-weight: 900;
+    }
+    .calendar > thead td {
+      height: 20px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .calendar > tbody td:hover {
+      background-color: beige;
+      cursor: pointer;
+    }
+    .prev, .next {
+      color: silver;
+    }
+    .sun, .holiday {
+      color: crimson;
+    }
+    .sat {
+      color: blue;
+    }
+  </style>
+   <div class="title">
+    <span>2025</span>
+    <span class="month">6</span>
+    <span>June</span>
+  </div>
+  <table class="calendar">
+    <thead>
+      <tr>
+        <td class="sun">SUN</td>
+        <td>MON</td>
+        <td>TUE</td>
+        <td>WED</td>
+        <td>THU</td>
+        <td>FRI</td>
+        <td class="sat">SAT</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="sun">1</td>
+        <td>2</td>
+        <td class="holiday">3</td>
+        <td>4</td>
+        <td>5</td>
+        <td class="holiday">6</td>
+        <td class="sat">7</td>
+      </tr>
+      <tr>
+        <td class="sun">8</td>
+        <td>9</td>
+        <td>10</td>
+        <td>11</td>
+        <td>12</td>
+        <td>13</td>
+        <td class="sat">14</td>
+      </tr>
+      <tr>
+        <td class="sun">15</td>
+        <td>16</td>
+        <td>17</td>
+        <td>18</td>
+        <td>19</td>
+        <td>20</td>
+        <td class="sat">21</td>
+      </tr>
+      <tr>
+        <td class="sun">22</td>
+        <td>23</td>
+        <td>24</td>
+        <td>25</td>
+        <td>26</td>
+        <td>27</td>
+        <td class="sat">28</td>
+      </tr>
+      <tr>
+        <td class="sun">29</td>
+        <td>30</td>
+        <td class="next">1</td>
+        <td class="next">2</td>
+        <td class="next">3</td>
+        <td class="next">4</td>
+        <td class="next">5</td>
+      </tr>
+    </tbody>
   </table>
 </body>
 </html>
