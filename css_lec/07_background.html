@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>background</title>
+  <style>
+    div {
+      box-sizing: border-box;
+      border: 1px solid red;
+    }
+
+    .box1 {
+      width: 50px;
+      height: 50px;
+      background-color: yellow;
+    }
+
+    .box2 {
+      width: 100px;
+      height: 100px;
+      background-image: url("../assets/images/animal1.jpg");
+      background-size: 100% 100%;/*100px 100px와 동일*/
+      background-repeat: no-repeat;
+      background-position: center; /*top, bottom, left, right, center*/
+    }
+
+    .box3 {
+      width: 300px;
+      height: 300px;
+      background-image: url("../assets/images/animal1.jpg");
+      background-repeat: no-repeat;
+      background-size: cover; /*이미지 너비 높이 중 작은 부분을 최대한 키운다. 큰 부분은 박스 바같으로 나가게되고 잘리게 된다*/
+      background-size: contain;/*이미지 너비 높이 중 큰 부분에 맞춰 박스 안으로 넣는다. 이미지가 잘리지 않지만 내부에 여백이 생긴다*/
+    }
+
+    .box4 {
+      width: 120px;
+      height: 120px;
+      background-image: url("../assets/images/weather.png");
+      background-position: -145px 0;/*왼쪽으로 145px 만큼, 위아래는 0, 항상 배경이미지를 이동*/
+      background-position: 145px; /*왼쪽으로 145px 만큼, 위아래는 center, 지정이 없으면 center 적용*/
+      /* background-position: 0 -145px; 좌우는 0 위로 145px 이동 */
+    }
+  </style>
+</head>
+<body>
+  <div class="box1">
+    
+  </div>
+  <hr>
+  <div class="box2"></div>
+  <hr>
+  <div class="box3"></div>
+  <hr>
+  <div class="box4"></div>
+</body>
+</html>

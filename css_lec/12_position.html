@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>position</title>
+  <style>
+    .box1 {
+      width: 100%;
+      height: 100px;
+      background-color: beige;
+      position: fixed;
+    }
+  </style>
+</head>
+<body>
+  <div class="box1">
+    box1
+  </div>
+  <p>1</p>
+  <p>2</p>
+  <p>3</p>
+  <p>4</p>
+  <p>5</p>
+  <hr>
+  <style>
+    .box2 {
+      width: 100px;
+      height: 100px;
+      position: static;/*position static인 요소(디폴트 요소)는 top, bottom, left, right 등 이동 옵션이 적용되지 않는다*/
+      top: 50px; /*적용안됨*/
+      left: 50px;/*적용안됨*/
+    }
+  </style>
+  <div class="box2">
+    box2
+  </div>
+  <hr>
+  <style>
+    .wrap {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+    }
+
+    .wrap > .box3 {
+      width: 80px;
+      height: 80px;
+      border: 1px solid red;
+      position: relative; /*position: relative인 요소는 top, bottom, left, right 등 이동 옵션 적용*/
+      top: 10px;
+      left: 10px;
+    }
+  </style>
+  <div class="wrap">
+    <div class="box3">box3</div>
+  </div>
+  <hr>
+  <style>
+    /*
+      position: absolute는 html 요소의 기본 배치를 무시한 위치로 이동할 수 있다
+      position이 static이 아닌 가장 가까운 조상 내부에서 top, bottom, left, right 같은 이동 옵션이 적용된다
+      
+    */
+    .container {
+      width: 200px;
+      height: 200px;
+      border: 1px solid blue;
+      position: relative;
+    }
+
+    .container > .box {
+      width: 50px;
+      height: 50px;
+      border: 1px solid green;
+      position: absolute;
+    }
+
+    .container > .box:nth-child(1) {
+      /* position: absolute; */
+      /*가장 가까운 조상 기준으로 이동 단, 조상은 static이면 안된다*/
+      top: 50px;
+      left: -50px;
+    }
+
+     .container > .box:nth-child(2) {
+      /* position: absolute; */
+      /*가장 가까운 조상 기준으로 이동 단, 조상은 static이면 안된다*/
+      top: 50px;
+      right: 50px;
+    }
+
+     .container > .box:nth-child(3) {
+      /* position: absolute; */
+      /*가장 가까운 조상 기준으로 이동 단, 조상은 static이면 안된다*/
+      bottom: 50px;
+      left: 50px;
+    }
+
+     .container > .box:nth-child(4) {
+      /* position: absolute; */
+      /*가장 가까운 조상 기준으로 이동 단, 조상은 static이면 안된다*/
+      bottom: 50px;
+      right: 50px;
+    }
+
+
+  </style>
+  <div class="container">
+    <div class="box">a</div>
+    <div class="box">b</div>
+    <div class="box">c</div>
+    <div class="box">d</div>
+  </div>
+  
+</body>
+</html>

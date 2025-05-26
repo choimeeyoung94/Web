@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>display</title>
+  <style>
+    div {
+      display: inline;/*inline 요소는 너비를 줄 수 없다*/
+   
+    }
+    span {
+      display: block;
+      width: 100px;
+    }
+
+    p {
+      display: inline-block;/*크기 조정할 수 있는 인라인 요소*/
+      width: 100px;
+    }
+
+   .form-login > label {
+    display: inline-block;
+    width: 100px;
+   }
+
+   button {
+    width: 250px;
+   }
+   
+  </style>
+</head>
+<body>
+  <div class="box1">div</div>
+  <div class="box2">div</div>
+  <span>span</span>
+  <span>span</span>
+  <p>p</p>
+  <p>p</p>
+  <p>p</p>
+
+  <form class="form-login" action="/login">
+    <label for="uid">아이디</label>
+    <input type="text" name="uid" id="uid">
+    <br>
+    <label for="pwd">비밀번호</label>
+    <input type="password" name="pwd" id="pwd">
+    
+    <br>
+    <button type="submit">로그인</button>
+  </form>
+</body>
+</html>

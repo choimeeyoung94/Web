@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>overflow</title>
+  
+</head>
+<body>
+  <style>
+    .wrap1 > div {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+    }
+
+    .box1 {
+      overflow: hidden; /*영역을 벗어난 컨텐츠 숨김*/
+    }
+
+    .box2 {
+      overflow: scroll;/*스크롤 바 표시*/
+    }
+
+    .box3 {
+      overflow: visible; /*영역을 벗어난 컨텐츠도 보여준다*/
+      margin-bottom: 450px;
+    }
+  </style>
+  <div class="wrap1">
+    <div class="box1">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    
+    <div class="box2">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    
+    <div class="box3">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    
+  </div>
+  
+
+  <style>
+    /*
+      자식 요소에 float: left를 적용하면 부모 요소는 float된 자식 요소의 높이를 인식하지 못한다 (높이가 0이 되거나 부모의 테두리 등이 안 보이는 상황 발생 등 )
+      부모 요소에 overflow: hidden을 적용하면 새로운 Block Formatting Context(BFC)가 생성되면서 float된 자식 요소의 높이도 부모의 레이아웃 계산에 포함된다
+
+      */
+    .wrap2 {
+      border: 1px solid red;
+      overflow: hidden;
+    }
+    .wrap2 > div {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+    }
+
+    .wrap2 > .box4 {
+      float: left;
+    }
+
+    .wrap2 > .box5 {
+      float: left;
+    }
+
+    .wrap2 > .box6 {
+      float: left;
+    }
+
+    .gnb {
+      list-style: none;
+      padding: 0;
+      /* overflow: hidden; */
+    }
+
+    .gnb > li{
+      float: left;
+    }
+
+    .gnb  a {
+      padding: 10px 5px;
+      border-bottom: 1px solid red;
+      text-decoration-line: none;
+    }
+
+    .gnb a:hover {
+      border-bottom: 1px solid green;
+    }
+
+  </style>
+  <div class="wrap2">
+    <div class="box4">
+      box4
+    </div>
+    <div class="box5">
+      box5
+    </div>
+    <div class="box6">
+      box6
+    </div>
+  </div>
+  <ul class="gnb">
+    <li><a href="#">홈</a></li>
+    <li><a href="#">야구</a></li>
+    <li><a href="#">해외야구</a></li>
+    <li><a href="#">축구</a></li>
+    <li><a href="#">해외축구</a></li>
+    <li><a href="#">농구</a></li>
+    <li><a href="#">배구</a></li>
+    <li><a href="#">N골프</a></li>
+    <li><a href="#">일반</a></li>
+    <li><a href="#">e스포츠</a></li>
+    <li><a href="#">아웃도어</a></li>
+  </ul>
+
+</body>
+</html>
