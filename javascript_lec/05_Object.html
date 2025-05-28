@@ -82,6 +82,29 @@
     let {name, ...rest} = {name: "홍길동", age: 30, tel: '010-0000-0000'};
     // name = "홍길동", rest = {age: 30, tel: '010-0000-0000'}
 -->
+<script>
+  {
+    // 객체 생성
+    const person = {
+      name:"또치",
+      age: 30,
+      hobbies: [
+        "tennis", 
+        "game",
+        "music"
+      ],
+    }
+    // 객체 확인하기
+    console.log(person);
+    // 프로러피 확인하기
+    console.log(person.name);
+    console.log(person.age);
+    console.log(person.hobbies);
 
+    console.log(person["name"]);
+    console.log(person["age"]);
+    console.log(person["hobbies"]);
+  }
+</script>
 </body>
 </html>

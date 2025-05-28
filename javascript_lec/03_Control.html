@@ -136,6 +136,238 @@
 
 
 
+
+
+  
+</script>
+
+<script>
+  /* number 타입 */
+  let number = 1; 
+  switch(number) {
+    case 1:
+      console.log("1");
+      break;
+    case 2:
+      console.log("2");
+      break;
+    default:
+      console.log("1,2가 아니다");
+  }
+
+  // 짝수 / 홀수 출력
+  number = 21;
+  switch(number % 2) {
+    case 0:
+      console.log(number, "짝수");
+      break;
+    case 1:
+      console.log(number, "홀수");
+      break;
+    default:
+      console.log("짝수, 홀수를 판별 할 수 없다");
+  }
+
+  let hour = prompt("현재 시간을 입력하세요 (0~23)");
+  // 오전 (0 ~ 11시) / 오후(12 ~ 23) => 12로 나눈 몫
+  switch(parseInt(hour / 12)) {
+    case 0:
+      console.log(`${hour}시는 오전`);
+      break;
+    case 1:
+      console.log(`${hour}시는 오후`);
+      break;
+  }
+  month = prompt("계절을 알고싶은 월을 입력하세요");
+  mod = month % 12;
+  switch (true) {
+    case (mod <= 2):
+      season = "겨울";
+      break;
+    case (mod >= 3 && mod <= 5):
+      season = "봄";
+      break;
+    case (mod >= 6 && mod <= 8):
+      season = "여름";
+      break;
+    default:
+      season = "겨울";
+  }
+  console.log(month, season);
+
+  switch(parseInt(month % 12 / 3)) {
+    case 0: console.log("겨울"); break;
+    case 1: console.log("봄"); break;
+    case 2: console.log("여름"); break;
+    case 3: console.log("가을"); break;
+  }
+
+  /*string 타입*/
+  let n = 1;
+  let cmd = "decrement"; // increment, decrement
+  
+  switch(cmd) {
+    case "increment":
+      console.log(n + 1);
+      break;
+    case "decrement":
+      console.log(n - 1);
+      break;
+  }
+
+  /*boolean 타입 (좋지 않은 개발 스타일)*/
+  let input = prompt("정수를 입력하세요");
+  let isPositive = input >= 0;
+  switch(isPositive) {
+    case true:
+      console.log("양수 입니다");
+      break;
+    case false:
+      console.log("음수 입니다");
+      break;
+  }
+
+
+
+
+</script>
+
+<script>
+
+  {
+  // 1,2,3,4,5, 문자열 만들기
+    let value = 1;
+    let str = '';
+
+    while(value <= 5) {// value가 6이면 종료 (value != 6, value < 6, value <= 5)
+      str += value;
+      str += ","
+      value++;
+    }
+
+    console.log(str);
+
+    // 5, 4, 3, 2, 1,
+    value = 5;
+    str = '';
+
+    while (value >= 1) {
+      str += value; // str += value-- + ","
+      str += ",";
+      value--;
+    }
+    console.log("------------", str);
+
+    // 연습)  1 ~ 100 사이 정수 중에서 3,6,9로 끝나는 정수를 쉼표로 연결하는 문자열 만들기
+    // 3,6,9,13,16,......99,
+    number = 1;
+    str = '';
+
+    while (number <= 100) {
+      if (value % 10 % 3 == 0) { // if (value % 10 != 0 && value % 10 % 3 == 0 )
+        str += number;
+        str += ",";
+      }
+      number++;
+    }
+    console.log(str);
+  }
+  
+</script>
+
+<script>
+{
+  // 1,2,3,4,5
+  let str = "";
+  for (let i = 1;  i <= 5; i++ ) {
+    str += i + ",";
+  }
+  console.log("================\n",str);
+
+  // 5,4,3,2,1
+  str = "";
+  for (let value = 5; value >= 1; value--) {
+    str += value + ",";
+  }
+  console.log("---------------------------------",str);
+}
+
+{
+  // 1일차 1교시 ... 8교시 2일차 1교시 ... 8교시
+  str = "";
+  for (let day = 1; day <= 5; day++) {
+    str += day + "일차\n"; // str += `${day}일차`
+    for (let hour = 1; hour <= 8; hour++) {
+      str += hour + "교시\n";
+      
+    }
+    
+    str += ",";
+    console.log(str);
+  }
+}
+
+
+
+{
+  // 연습) <ul><li>1분기</li><li>2분기</li><li>3분기</li><li>4분기</li></ul>
+  str = "<ul>";
+  for (let value = 1; value <= 4; value++) {
+    str += "<li>" + value +"분기" + "</li>";
+    if (value == 4) {
+      str += "</ul>";
+    }
+  }
+
+  document.write(str);
+}
+
+{
+  // 연습) <select><option value="1">1월</option><option value="2">2월</option>...</select>
+  str = "<select>";
+  for (let value = 1; value <= 12; value++) {
+    str += "<option value=" + value + ">" + value + "월</option>"
+    if (value == 12) {
+      str += "</select>";
+    }
+  }
+  document.write(str);
+}
+
+{
+  // 연습) <div><img src=../assets/images/?"><img src=../assets/images/?"><img src=../assets/images/?"></div> x 3
+  str = "";
+  let imageNum = 1;
+  for (let i = 1; i <= 3; i++) {
+    str += "<div>";
+      for (let j = 1; j <= 3; j++) {
+        str += `<img src="../assets/images/animal${imageNum}.jpg" width="100px">`;
+        imageNum++; 
+      }
+    str += "</div>";
+  }
+  document.write(str);
+  str = "";
+}
+
+</script>
+
+<script>
+
+{
+  // 무한 루프: 의도적으로 반복문이 끝나지 않도록 설정한 루프
+  // 1,2,3,4,5 문자열 출력하기
+  let str = "";
+  let value = 1;
+  while (true) { // for문으로 무한루프 만드는 방법 for (;;)
+    str += value++ + ",";
+    if (value > 5) {
+      break; // 루프 종료시 사용하는 break6
+    }
+  }
+  console.log(str);
+}
+  
 </script>
 </body>
 </html>
