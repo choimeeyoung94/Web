@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+      // 연습)  1 ~ 100 사이 정수 중에서 3,6,9로 끝나는 정수를 쉼표로 연결하는 문자열 만들기
+      // 3,6,9,13,16,......99,
+    let value = 1;
+    let str = '';
+    while (value <= 100) {
+      // 1의 자리가 3의 배수 (3,6,9)인 숫자만 걸러낸다, 1의 자리가 0인 숫자는 제외한다다
+      if (value % 10 != 0 && value % 10 % 3 == 0) {  // if (value % 10 == 3 || value % 10 == 6 || value % 10 == 9) , value % 10 % 3 == 0, value % 10 != 0 && value % 10 % 3 == 0
+        str += value + ",";
+      }
+      value++;
+    }
+    console.log(str);
+  </script>
+</body>
+
+<script>
+   //배열
+   //                [0]      [1]      [2]       [3]        [4]
+    const cities = ["seoul", "tokyo", "sidney", "newyork", "toronto"];
+    // 인덱스만 순회
+    for (const i in cities) {// 인덱스랑 요소랑 같이 보기
+      console.log(i, cities[i]);//0, seoul  1, tokyo  2, sidney  3, newyork  4, totonto
+    }
+    // 요소만 순회
+    for (const city of cities) {// 요소만 보고 싶을때
+      console.log(city);// seoul tokyo sidney newyork toronto
+    }
+    // 인덱스와 요소 모두 순회
+    for (const [i, city] of cities.entries()) {//[index, value]의 쌍으로 데이터를 꺼낼수 있다
+      console.log(i, city);//0 seoul, 1 tokyo, 2 sidney 3 newyork, 4 toronto
+    }
+</script>
+</html>
