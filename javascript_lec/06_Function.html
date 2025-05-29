@@ -297,8 +297,8 @@ infoRest("x", "y", "z");
   // 최종 실행 시 "놀이기구 탑승이 가능합니다". "놀이기구 탑승이 거절되었습니다" 중 하나의 메시지를 출력
 
   function isPossible(weight) {
-    let status = true;
-    let confirmStatus = true;
+    let status = false;
+    let confirmStatus = false;
     if (weight >= 90) {
       status = false;
     } else if (weight < 40) {
