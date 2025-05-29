@@ -260,16 +260,14 @@
 
     // 연습)  1 ~ 100 사이 정수 중에서 3,6,9로 끝나는 정수를 쉼표로 연결하는 문자열 만들기
     // 3,6,9,13,16,......99,
-    number = 1;
+    value = 1;
     str = '';
-
-    while (number <= 100) {
-      if (value % 10 % 3 == 0) { // if (value % 10 != 0 && value % 10 % 3 == 0 )
-        str += number;
-        str += ",";
-      }
-      number++;
+   while (value <= 100) {
+    if (value % 10 != 0 && value % 10 % 3 == 0) {  // if (value % 10 == 3 || value % 10 == 6 || value % 10 == 9) , value % 10 % 3 == 0
+      str += value + ",";
     }
+    value++;
+  }
     console.log(str);
   }
   
