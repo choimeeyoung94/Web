@@ -36,7 +36,21 @@
     }
     // 인덱스와 요소 모두 순회
     for (const [i, city] of cities.entries()) {//[index, value]의 쌍으로 데이터를 꺼낼수 있다
-      console.log(i, city);//0 seoul, 1 tokyo, 2 sidney 3 newyork, 4 toronto
+      console.log(i, city);//0 seoul, 1 tokyo, 2 sidney 3 newyork,
     }
+</script>
+
+<script>
+    function summaryArray(callback, num) {
+    callback(num);
+  };
+
+  summaryArray(function(num) {
+    let sumResult = 0;
+    for (let n = 1; n <= num; n++) {
+      sumResult += n;
+    };
+    console.log("1부터 " + num + "까지 더한 결과: " + sumResult);
+  }, 100);
 </script>
 </html>
