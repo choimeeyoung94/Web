@@ -25,3 +25,7 @@
 - 함수의 실행 결과를 반환한다
 - return 문이 없으면 undefined가 반환된다
 
+attribute vs property 차이점
+attribute: HTML 태그에 정의된 속성
+property: DOM 객체의 속성 (JS 객체의 property)
+
