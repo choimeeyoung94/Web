@@ -169,8 +169,6 @@ Array 내장 객체
     console.log("otherNumbers: " + otherNumbers);
     
     const results = [...positiveNumbers, ...otherNumbers]; // positiveNumbers 배열과 otherNumbers 배열 스프레드 연산자 사용해서 합치기
-    // results.push(otherNumbers);
-    // results.push(positiveNumbers);
    
     console.log("positiveNumbers배열과 otherNumbers 배열 합친결과: " + results);
   }
@@ -213,16 +211,8 @@ Array 내장 객체
     // 연습) 배열에 저장된  항목들을 ul 태그로 만들어라
     const seasons = ["spring", "summer", "autmn", "winter"];
     let str = "<ul>";
-
-    // const seasonsList = seasons.map(season => "<li>" + season + "</li>");
-    // const reslut = "<ul>" + seasonsList.join("") + "</ul>";
-    // document.write(result);  
-
-
+ 
     seasons.map(season => "<li>" + season + "</li>").forEach(liTag => str += liTag);  
-    // seasons.forEach(function(season) {
-    //   str += `<li>${season}</li>`;
-    // })
     str += "</ul>";
     document.write(str);
 
