@@ -21,8 +21,8 @@
   <body>                                  HEAD             BODY
     <h1>Header</h1>                        ↓             ↙      ↘
     <p>Paragraph</p>                     TITLE        H1          P
-  </body>                                  ↓           ↓          ↓
-  </html>                            "My Document"  "Header"  "Paragraph"
+  </bodyy>                                  ↓           ↓          ↓
+  </htmlll>                            "My Document"  "Header"  "Paragraph"
 
                       DOM 객체 계층 구조
 
@@ -69,7 +69,7 @@
 
 4. 주요 Document 객체 반환 메소드
   1) Document.getElementById(id)
-    (1) 주어진 문자열과 일치하는 id 속성을 가진 요소를 Element 객체로 반환합니다.
+    (1) 주어진 문자열과 일치하는 id 속성을 가진 요소를 HTMLElement 객체로 반환합니다.
     (2) 없으면 null을 반환합니다.
   2) Document.getElementsByClassName(class)
     (1) 주어진 문자열과 일치하는 class 속성을 가진 모든 요소를 HTMLCollection 객체로 반환합니다.
@@ -171,5 +171,127 @@
                | checked="checked"  |
 -->
 
+
+<div id="box1" class="my-box">my box1</div>
+<div id="box2" class="my-box">my box2</div>
+<div id="box3" class="my-box">my box3</div>
+<script>
+  {
+    // HTMLElement 객체를 반환하는 메소드 다루기
+    const box1 = document.getElementById("box1");
+    const box2 = document.querySelector("#box2");//css 선택자 활용하기
+    console.log(box1);
+    console.log(box2);
+    console.log(document.querySelector(".my-box"));// querySelector 사용시 첫번째 요소만 선택된다
+  }
+  {
+    // HTMLCollection 객체를 반환하는 메소드 다루기
+    const divList = document.getElementsByTagName("div");
+    const myBoxList = document.getElementsByClassName("my-box");
+    console.log(divList);
+    console.log(myBoxList);
+  }
+  {
+    // NodeList 객체를 반환하는 메소드
+    const divList = document.querySelectorAll("div"); //css 태그 선택자
+    const myBoxList = document.querySelectorAll(".my-box"); //css 클래스 선택자
+    console.log(divList);
+    console.log(myBoxList);
+  }
+</script>
+<hr>
+<ol id="seasons">
+
+</ol>
+<script>
+  //DOM 조작하기: HTML 요소 조작하기 (대표적으로 태그 조작하기)
+  const ol = document.getElementById("seasons");
+  const seasons = ["spring", "summer", "autumn", "winter"];
+  let str = "";
+  seasons.forEach((season) => {str += "<li>" + season + "</li>"});
+  const fourSeasons = str;
+  ol.innerHTML += fourSeasons; 
+
+</script>
+
+<hr>
+
+<p id="paragraph"><strong>나는 문단이다</strong></p>
+<script>
+  {
+    // DOM 조작하기: 텍스트 조작
+    const paragraph = document.getElementById("paragraph");
+    console.log(paragraph.textContent);
+    console.log(paragraph.innerText);
+    paragraph.textContent = "문단에 전달하는 텍스트입니다.";
+    paragraph.textContent += " 문단에 추가하는 텍스트입니다.";
+  }
+</script>
+
+<hr>
+
+<p>
+  <a id="naver-link" href="https://www.naver.com">네이버</a>
+</p>
+<script>
+  {
+    const naverLink = document.getElementById("naver-link");
+    naverLink.style.color = "red"; // red와 동일한 색상: "#ff0000", rgb(255,0,0) 등 (점 표기법: camelCase)
+    naverLink.style["text-decoration"] = "none"; // 밑줄 없애기 (대괄호 표기법: dash-case/ kebab-case)
+  }
+</script>
+<hr>
+<p>
+  <input type="text" id="id" class="inp" value="admin" readonly/>
+</p>
+<script>
+  {
+    // 속성(Attribute) 다루기: 태그 작성시 명시한 속성을 Attribute라고 한다
+    const input = document.getElementById("id");
+    
+    //속성 확인
+    console.log(input.getAttribute("type"));
+    console.log("id 속성", input.getAttribute("id"));
+    console.log("class 속성", input.getAttribute("class"));
+    console.log("value 속성", input.getAttribute("value"));
+    console.log("readonly 속성", input.getAttribute("readonly"));
+    console.log("name 속성", input.getAttribute("name"));// name 속성 자체가 없으므로 null
+
+    // 속성 변경
+    input.setAttribute("value", "master"); // value="master"의 의미
+
+    // 속성 삭제
+
+    input.removeAttribute("readonly");// readonly 속성 지우기
+  }
+</script>
+
+<hr>
+<p>
+  <input type="text" id="pw" class="inp" value="1234" readonly>
+</p>
+<script>
+  {
+    // 속성 (Property) 다루기: DOM Tree에서 처리하는 속성을 의미. 태그에 명시한 속성과 다르다
+    const input = document.getElementById("pw");
+    console.log(input); // 프로퍼티 확인하기 가장 좋은 방법
+
+    // 프로퍼티 확인
+    console.log(input.type);
+    console.log(input.id);
+    console.log(input.className);
+    console.log(input.value);
+    console.log(input.readOnly);
+    
+    // 프로퍼티 수정
+    input.type = "password";
+    input.readOnly = false;
+
+    // 프로퍼티 삭제 (DOM 객체의 프로퍼티는 지울 수 없다)
+    delete input.value;
+  }
+  
+
+</script>
 </body>
 </html>

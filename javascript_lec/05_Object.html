@@ -197,7 +197,7 @@
       
     }
 
-    // 구조 분해 할당
+    // 구조 분해 할당 (프로퍼티 이름과 변수 이름이 같아야 한다)
     const { question, answer} = qna;
 
     // 분해된 변수 확인
@@ -231,6 +231,57 @@
     document.write(str);
   }
   
+</script>
+
+<script>
+  const user = {
+    name: "jackson",
+    age: 20,
+    phone: "010-1111-2222",
+    gender: "male",
+    addr: "seoul",
+  }
+
+  // 객체나 배열에서 사용할 수 있는 새로운 연산자: 스프레드 연산자(...)
+  // 객체나 배열을 펼처서(복사해서) 새로운 객체나 배열을 만들때 사용
+
+  const newUser = {
+    ...user,// 객체 user의 모든 프로퍼티를 펼처서 사용
+    age: 21, // age만 덮어쓰기 한다
+  }
+
+  console.log(newUser);
+
+</script>
+
+<script>
+
+  const title = "미션임파서블";
+  const actor = "톰크루즈";
+
+  // 객체리터럴 생성시 프로퍼티와 값이 동일한 경우 
+  // 프로퍼티만 작성한다 (프로퍼티 단축 표기법)
+  const movie = {
+    title, 
+    actor,
+    // 객체 리터럴을 생성 하면서 프로퍼티에 값을 할당하는 문법
+    // title: title,
+    // actor: actor,
+  }
+
+  // 프로퍼티 단축 표기법
+  // 객체 프로퍼티 이름과 변수 이름이 동일할 때만 사용 가능
+  /*
+    {
+      title: title,
+      actor: acotr,
+    }
+    이렇게 쓰는 것을 아래와 같이 축약한 것이다
+  */
+  const movie2 = {title, actor};// 변수명이 객체의 프로퍼티 키로 쓰일 이름과 같을때 단축 표기법 사용
+  console.log(movie);
+  console.log(movie2);
+
 </script>
 
 

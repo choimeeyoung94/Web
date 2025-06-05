@@ -101,6 +101,7 @@
 -->
 <script>
 
+
   //--- 1. 함수 선언식
   function declaration() {
     console.log('declare 함수가 호출되었습니다.');
@@ -110,6 +111,9 @@
   const expr = function() {
     console.log('expr 함수가 호출되었습니다.');
   }
+  
+  // 선언식으로 만든 함수를 표현식으로 바꾸기
+  const expr2 = declaration;
 
   //---- 3. 화살표 함수
   const arrow = () => {
@@ -241,7 +245,7 @@ infoRest("x", "y", "z");
   function sumArray(numbers) {
     let total = 0;
     for (const number of numbers) {
-      total += number;
+     total += number;
     }
     return total;
   }
@@ -265,9 +269,10 @@ infoRest("x", "y", "z");
   // 객체를 반환하는 함수
   function retObject(nickname, age) {
     return {
-      nickname: name, // name: "홍길동"
-      age: age,   // age: 30
-
+      // nickname: name, // name: "홍길동"
+      // age: age,   // age: 30
+      // 객체 프로퍼티 단축 표기법에 의해 아래와 같은 코드도 가능
+      nickname, age,
     }
   }
   const user = retObject("홍길동", 30);
@@ -296,31 +301,83 @@ infoRest("x", "y", "z");
   // isPossible 함수는 놀이기구의 이용이 가능하면 true 아니면 false를 반환
   // 최종 실행 시 "놀이기구 탑승이 가능합니다". "놀이기구 탑승이 거절되었습니다" 중 하나의 메시지를 출력
 
-  function isPossible(weight) {
-    let status = false;
-    let confirmStatus = false;
-    if (weight >= 90) {
-      status = false;
-    } else if (weight < 40) {
-      confirmStatus = confirm("동의하십니까?");
-      if (confirmStatus == true) {
-        status = true;
-      } else {
-        status = false;
-      }
-    } else {
-      status = true;
-    }
-    return status;
+  // function isPossible(weight) {
+  //   let status = false;
+  //   let confirmStatus = false;
+  //   if (weight >= 90) {
+  //     status = false;
+  //   } else if (weight < 40) {
+  //     confirmStatus = confirm("동의하십니까?");
+  //     if (confirmStatus == true) {
+  //       status = true;
+  //     } else {
+  //       status = false;
+  //     }
+  //   } else {
+  //     status = true;
+  //   }
+  //   return status;
+  // }
+
+  // let result = isPossible(prompt("몸무게를 입력하세요."));
+  // console.log("result: " , result);
+  // if (result == true) {
+  //   console.log("놀이기구 탑승이 가능합니다.");
+  // } else {
+  //   console.log("놀이기구 탑승이 거절되었습니다.");
+  // }
+
+
+  //연습) 함수와 값을 전달하면 전달한 함수에 값을 연산한 결과를 반환하는 함수를 구성
+  function add(a,b) {
+    return a + b;
   }
 
-  let result = isPossible(prompt("몸무게를 입력하세요."));
-  console.log("result: " , result);
-  if (result == true) {
-    console.log("놀이기구 탑승이 가능합니다.");
-  } else {
-    console.log("놀이기구 탑승이 거절되었습니다.");
+  function minus(a,b) {
+    return a - b;
   }
+
+  function mul(a,b) {
+    return a * b;
+  }
+
+  function div(a,b) {
+    return a / b;
+  }
+
+  function mod(a, b) {
+    return a % b;
+  }
+
+  // calculate 함수 만들기
+  function calculate(add, value1, value2) {
+    return add(value1, value2);
+  }
+
+  // calculate 함수 호출하기
+  const value1 = 5;
+  const value2 = 3;
+  const addResult = calculate(add, value1, value2);
+  console.log(addResult);
+
+  // 연습) 배열과 함수를 전달하면 배열에 모든 요소를 전달한 함수 처리하여 반환
+  function handleArray(arr, callback) {
+    // 구현할 곳
+    const newArr = [];
+    for (const data of arr) {
+     newArr.push(callback(data));
+    }
+    return newArr;
+  }
+
+  const arrResult = handleArray([1,2,3],function(number) {
+    return number * 2;
+  })
+  console.log(arrResult);
+  // arrResult = [2,4,6]
+
+
+
 </script>
 </body>
 </html>
