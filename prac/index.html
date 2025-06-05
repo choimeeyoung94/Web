@@ -38,5 +38,11 @@
     for (const [i, city] of cities.entries()) {//[index, value]의 쌍으로 데이터를 꺼낼수 있다
       console.log(i, city);//0 seoul, 1 tokyo, 2 sidney 3 newyork, 4 toronto
     }
+
+    const numbers = [2,4,6,-9,-8,-7];
+    const positiveNumbers = numbers.filter(n => n >= 0).map(n => n * 2);
+    const otherNumbers = numbers.filter(n => n < 0);
+    const results = [...positiveNumbers, ...otherNumbers];
+    console.log(results);
 </script>
 </html>
