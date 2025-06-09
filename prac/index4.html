@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const numbers = [2,4,6,-9,-8,-7];
+    const positiveNumbers = numbers.filter(n => n >= 0).map(n => n * 2);
+    const otherNumbers = numbers.filter(n => n < 0);
+    const results = [...positiveNumbers, ...otherNumbers];
+    console.log(results);
+
+        const users = [
+      {
+        name: "제시카",
+        agree: false,
+      },
+      {
+        name: "캐서린",
+        agree: true,
+      },
+      {
+        name: "타일러",
+        agree: false,
+      },
+      {
+        name: "제라드",
+        agree: true,
+      },
+    ];
+
+    const userNames = users.filter(user => user.agree).map(user => user.name);
+    console.log(userNames);
+
+    let str = "<ul>";
+    const seasons = ["spring", "summer", "autumn", "winter"];
+    seasons.map(season => `<li>${season}</li>`).forEach(liTag => str += liTag);
+    console.log(str);
+    document.write(str);
+  </script>
+</body>
+</html>
