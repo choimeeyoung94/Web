@@ -50,19 +50,19 @@
      메타 문자 | 의미                                          | 예시
     -----------|-----------------------------------------------|---------------------------------------------------------
      .         | 모든 단일문자                                 | b.at     : baat, bbat, bcat, bdat, ... (불가 bat, baaat)
-     *         | 0개 이상의 반복 문자                          | goo*     : go, god, good, goood, ...
+     *         | 0개 이상의 반복 문자 (글자가 안와도 된다)     | goo*     : go, god, good, goood, ...
      +         | 1개 이상의 반복 문자                          | goo+     : goo, good, goood, ...
      ^         | 시작이 일치하는 문자                          | ^a       : app, apple, asia, africa, ...
      $         | 끝이 일치하는 문자                            | end$     : end, the end, ... (불가 ending)
-     ?         | 0개 이상의 문자                               | colo?r   : color, colour
+     ?         | 0개 이상의 문자 (없어도 된다)                 | colo?r   : color, colour
      ()        | 괄호 내의 문자를 문자 패턴으로 간주(그룹화)   | (app)A?  : appA, appappA, appappappA, ...
      |         | 또는                                          | a(b|c)   : ab, ac
      \         | 역슬래시 뒤 메타 문자를 일반 문자로 간주      | \.       : .
      {m}       | 정확히 m개 문자 (0 <= m <= 255)               | a{3}     : aaa
      {m,}      | m개 이상 문자 (0 <= m <= 255)                 | a{3,}    : aaa, aaaa, aaaaa, ...
      {m,n}     | m개 이상 n개 이하 문자 (0 <= m <= 255)        | a{2,3}   : aa, aaa
-     [ ]       | 대괄호 안 문자 중 하나와 일치                 | [a-z]    : 소문자 a~z 중 하나
-     [^ ]      | 대괄호 안 문자를 제외한 나머지와 일치         | [^a]     : 문자 a 를 제외한 나머지 모든 문자
+     [ ]       | 대괄호 속 문자 중 하나와 일치  [ab]: a또는 b  | [a-z]    : 소문자 a~z 중 하나
+     [^ ]      | 대괄호 속 문자를 제외한 나머지와 일치         | [^a]     : 문자 a 를 제외한 나머지 모든 문자
      \d        | 숫자(0~9)와 일치                              | \d{3}    : 숫자 3자리 (000 ~ 999)
      \w        | 영문자/숫자/밑줄 중 하나와 일치               | \w{4,12} : 영문자/숫자/밑줄로 4~12자 구성(예: 아이디)
     --------------------------------------------------------------------------------------------------------------------
@@ -90,6 +90,196 @@
       ① 정규식에 매칭되는 부분을 기준으로 문자열을 쪼개어 배열로 반환합니다.
       ② 예시: "a,b,c".split(/,/) → ['a', 'b', 'c']
 -->
+
+<script>
+  {
+    const str = 'Hello World';
+    const regexp = /[al]/g;// a또는 l , g(모든 패턴 매칭)
+    console.log('RegExp test():', regexp.test(str));
+    console.log('RegExp exec():', regexp.exec(str)); // 2
+    console.log('String match():', str.match(regexp)); // [ l l l]
+    console.log('String search():', str.search(regexp));   // 인덱스 반환, 인덱스 2에 a또는 l이 있어서 2가 나온다
+  }
+
+
+</script>
+<style>
+  .match {
+    color: green;
+  }
+
+  .not-match {
+    color: red;
+  }
+</style>
+
+<div>
+  <input type="text" id="post">
+  <button id="btn-post">우편번호검사</button>
+  <span id="span-post"></span>
+</div>
+
+<script>
+const verifyPost = () => {
+  const post = document.getElementById('post');
+  const spanPost = document.getElementById('span-post');
+  const regexp = /^[0-9]{5}$/;
+  document.getElementById('btn-post').addEventListener('click', () =>{
+  spanPost.classList.remove('match', 'not-match');
+    if (regexp.test(post.value)) {
+        spanPost.textContent = '우편번호입니다';
+        //spanPost.classList.remove('not-match');
+        spanPost.classList.add('match');
+    } else {
+      spanPost.textContent = '우편번호가 아닙니다';
+      //spanPost.classList.remove('match');
+      spanPost.classList.add('not-match');
+      
+    }
+  });
+}
+verifyPost();
+
+</script>
+
+<style>
+  .match {
+    color: green;
+  }
+
+  .not-match {
+    color: red;
+  }
+</style>
+<hr>
+<input type="text" id="phone">
+<button id="btn-phone">전화번호검사</button>
+<span id="span-phone"></span>
+<script>
+  const verifyMobile = () => {
+    const phone = document.getElementById('phone');
+    const spanPhone = document.getElementById('span-phone');
+    const regexp = /^010(-?[0-9]{4}){2}$/;
+    document.getElementById('btn-phone').addEventListener('click', () => {
+      spanPhone.classList.remove('match','not-match');
+      if(regexp.test(phone.value)) {
+        spanPhone.textContent = '휴대폰 번호가 맞습니다.';
+        spanPhone.classList.add('match');
+      } else {
+        spanPhone.textContent = '휴대폰 번호가 아닙니다.';
+        spanPhone.classList.add('not-match');
+      }
+    });
+  }
+
+  verifyMobile();
+</script>
+
+<hr>
+
+<style>
+  .match {
+    color: blue;
+  }
+
+  .not-match {
+    color: rgb(95, 63, 3);
+  }
+</style>
+<div>
+  <input type="text" id="pw">
+  <button type="button" id="btn-pw">비밀번호검사</button>
+  <span id="span-pw">대문자, 소문자, 숫자, 특수문자 중 3가지 이상을 사용한 4 ~ 20자</span>
+</div>
+
+<script>
+  const verifyPassword = () => {
+    const pw = document.getElementById('pw');
+    const spanPw = document.getElementById('span-pw');
+    
+     document.getElementById('btn-pw').addEventListener('click', () => {
+       spanPw.classList.remove('match', 'not-match');
+       const length = pw.value.length;
+       const ruleCount = /[A-Z]/.test(pw.value) // 대문자가 있으면 true, 1
+                    + /[a-z]/.test(pw.value) // 소문자가 있으면 false, 0
+                    + /[0-9]/.test(pw.value) // 숫자 있으면 true
+                    + /[!@#]/.test(pw.value) //!,@,# 있으면 true
+                    //+ /[^A-Za-Z0-9]/.test(pw.value) 대문자 소문자 숫자를 제외한 문자가 있으면 true (모든 특수문자 허용) 
+
+      if (ruleCount >= 4 && length <= 20 && ruleCount >= 3) {
+        spanPw.textContent = "비밀번호가 적절합니다.";
+        spanPw.classList.add('match');
+      } else {
+        spanPw.textContent = "비밀번호가 적절하지 않습니다.";
+        spanPw.classList.add('not-match');
+      }
+    });
+  }
+
+  verifyPassword();
+</script>
+
+<hr>
+<input type="text" id="uid">
+<button type="button" id="btn-uid">아이디검사</button>
+<span id="span-uid">소문자/숫자/특수문자(-,_)가능, 첫글자 소문자만 가능, 글자 수 4 ~ 20자</span>
+
+<script>
+  {
+    // 아이디: 소문자/숫자/특수문자(-,_)가능, 첫글자 소문자만 가능, 글자 수 4 ~ 20자
+    const regexp = /^[a-z][a-z0-9-_]{3,19}$/;
+    const id = prompt('아이디를 입력하세요');
+    console.log('id check:', regexp.test(id));
+  }
+  
+  {
+    // 이메일: 아이디@호스트.도메인 or 아이디@호스트.도메인.도메인
+    // 아이디: 1글자 이상 (한글은 제외)
+    // 호스트: 1글자 이상 (한글은 제외)
+    // 도메인: .com, .org, .co.kr .or.kr 2 ~ 6 (한글은 제외)
+    const regexp = /^[A-Za-z0-9-_]+@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
+    const email = prompt('이메일을 입력하세요');
+    console.log('email check:', regexp.test(email));
+  }
+  
+  {
+    // 연습
+    // IP주소: 0-255.0-255.0-255.0-255
+    // 0-9     [0-9]
+    // 10-99   [1-9][0-9] 
+    // 100-199 1[0-9]{2}
+    // 200-249 2[0-4][0-9]
+    // 250-255 25[0-5]
+    const regexp = /^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}$/;
+    const ip = prompt('IP를 입력하세요');
+    console.log('ip check:', regexp.test(ip));
+  }
+</script>
+
+<form action="" id="form-login" method="post" action="/login">
+  <input type="text" id="user-id" placeholder="example@host.domain">
+  <br>
+  <input type="password" id="user-pw" placeholder="****">
+  <br>
+  <button type="submit">제출</button>
+</form>
+
+<script>
+  const doLogin = () => {
+    const userId = document.getElementById('user-id');
+    const userPw = document.getElementById('user-pw');
+    const regId = /^[A-Za-z0-9-_]+@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
+    const regPw = /^[A-Za-z0-9!@#]{4,20}$/;
+    document.getElementById('form-login').addEventListener('submit', (e) => {
+        if (!regId.test(userId.value) || !regPw.test(userPw.value)) {
+            alert('이메일과 비밀번호를 확인하세요.');
+            e.preventDefault();
+        }
+    });
+  }
+
+  doLogin();
+</script>
 
 </body>
 </html>
