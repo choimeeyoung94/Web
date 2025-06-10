@@ -125,7 +125,7 @@ const verifyPost = () => {
   const spanPost = document.getElementById('span-post');
   const regexp = /^[0-9]{5}$/;
   document.getElementById('btn-post').addEventListener('click', () =>{
-  spanPost.classList.remove('match', 'not-match');
+    spanPost.classList.remove('match', 'not-match');
     if (regexp.test(post.value)) {
         spanPost.textContent = '우편번호입니다';
         //spanPost.classList.remove('not-match');

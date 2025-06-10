@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+#carouselImage {
+  width: 400px;
+  height: auto;
+  display: block;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+  </style>
+</head>
+<body>
+  <div class="carousel-container">
+  <button id="prevBtn">←</button>
+  <div class="image-wrapper">
+    <img id="carouselImage" src="image1.jpg" alt="Carousel Image">
+    <div class="pagination" id="paginationDots"></div>
+  </div>
+  <button id="nextBtn">→</button>
+</div>
+
+  <script>
+    const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+let currentIndex = 0;
+
+const imageElement = document.getElementById('carouselImage');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const pagination = document.getElementById('paginationDots');
+
+function showImage(index) {
+  imageElement.src = images[index];
+  updatePagination(index);
+}
+
+function updatePagination(index) {
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+}
+
+function createPaginationDots() {
+  images.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    dot.addEventListener('click', () => {
+      currentIndex = i;
+      showImage(currentIndex);
+    });
+    pagination.appendChild(dot);
+  });
+}
+
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  showImage(currentIndex);
+});
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % images.length;
+  showImage(currentIndex);
+});
+
+// 초기화
+createPaginationDots();
+showImage(currentIndex);
+
+  </script>
+</body>
+</html>
