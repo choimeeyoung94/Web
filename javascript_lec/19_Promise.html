@@ -170,7 +170,7 @@
 
 <button type="button" id="btn-work">DoWork</button>
 <script>
-  
+
   // 비동기 작업이 끝나고 결과를 받아서 다음 작업을 해야할때 promise를 사용
   // 비동기의 문제점을 해결하기 위해 promise를 사용
   document.getElementById('btn-work').addEventListener('click', () => {
@@ -209,7 +209,7 @@
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('get', 'https://jsonplaceholder.typicode.com/posts/100');
-      xhr.addEventListener('load', () => {
+      xhr.addEventListener('load', () => {// 요청과 응답이 성공했을때
         resolve(JSON.parse(xhr.responseText));
       })
       xhr.addEventListener('error', () => {
@@ -244,7 +244,7 @@
     new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('get', 'https://jsonplaceholder.typicode.com/users/1');
-      xhr.addEventListener('load', () => {
+      xhr.addEventListener('load', () => {// 요청과 응답이 성공했을때
         resolve(JSON.parse(xhr.responseText));
       })
        xhr.send();
