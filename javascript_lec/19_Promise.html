@@ -117,5 +117,149 @@
     })
 -->
 
+
+<button type="button" id="btn-not-work">DoNotWork</button>
+<script>
+
+  document.getElementById('btn-not-work').addEventListener('click', () => {
+    let result;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://jsonplaceholder.typicode.com/users/1');
+    xhr.addEventListener('readystatechange', () => {
+      if (xhr.readyState === 4 ) {
+        if (xhr.status === 200) {
+          const { name } = JSON.parse(xhr.responseText);
+          result = name;
+         
+        }
+      }
+     
+    })
+    xhr.send();
+
+    console.log('응답 결과:', result); // 비동기 작업 결과를 기다리지 않기 때문에 undefined 출력
+  });
+
+</script>
+
+<hr>
+
+<button type="button" id="btn-promise">프로미스확인</button>
+<script>
+  document.getElementById('btn-promise').addEventListener('click', () => {
+    const a = new Promise((resolve, reject) => {
+      
+      if (Math.random() < 0.5) // 50% 확률로 성공과 실패를 구성
+        resolve('성공');  // 성공 시 호출하도록 코드를 구성
+      else 
+        reject('실패');  // 실패 시 호출하도록 코드를 구성
+    });
+
+    const b = a.then(msg => {  // resolve() 호출은 then 메서드의 콜백함수와 연결된다
+      console.log(`작업이 ${msg} 했습니다`);
+    })
+    b.catch(msg => { // reject() 호출은 catch 메소드의 콜백함수와 연결된다
+      console.log(`작업이 ${msg}했습니다.`);
+    });
+
+  });
+</script>
+
+<hr>
+
+<button type="button" id="btn-work">DoWork</button>
+<script>
+  
+  // 비동기 작업이 끝나고 결과를 받아서 다음 작업을 해야할때 promise를 사용
+  // 비동기의 문제점을 해결하기 위해 promise를 사용
+  document.getElementById('btn-work').addEventListener('click', () => {
+    let result;
+    
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('get', 'https://jsonplaceholder.typicode.com/users/1');
+      xhr.addEventListener('load', () => {// load 이벤트는 요청과 응답이 성공했음을 의미한다
+          resolve(JSON.parse(xhr.responseText));  // 비동기 작업 성공시 resolve() 메소드 호출
+        }  
+      )
+      xhr.addEventListener('error', () => {// error 이벤트는 요청이나 응답이 실패했음을 의미한다
+        reject(xhr);    // 비동기 작업 실패시 reject() 메소드 호출
+      })
+      xhr.send();
+    })
+    .then(({ name }) => {
+      result = name;
+      console.log('응답결과:', result);
+    })
+    .catch(({ status, statusText }) => {
+      console.log('status:', status);
+      console.log('statusText:', statusText);
+    });
+  })
+
+
+</script>
+
+<hr>
+<button type="button" id="btn-posts">요청하기</button>
+<script>
+  // 프로미스를 이용해서 두번의 비동기 요청을 연속적으로 처리하는 상황
+  document.getElementById('btn-posts').addEventListener('click', () => {
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('get', 'https://jsonplaceholder.typicode.com/posts/100');
+      xhr.addEventListener('load', () => {
+        resolve(JSON.parse(xhr.responseText));
+      })
+      xhr.addEventListener('error', () => {
+        reject(xhr);
+      })
+      xhr.send();
+    })
+    .then((jsonData) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('get', `https://jsonplaceholder.typicode.com/users/${jsonData.userId}`);// 첫번째 요청의 결과를 이용해서 두번째 요청을 진행한다
+      xhr.addEventListener('load', () => {
+        const result = JSON.parse(xhr.responseText);
+        console.log('name:', result.name);
+      })
+      xhr.send();
+    })
+  })
+
+
+
+
+</script>
+
+
+<hr>
+
+<button type="button" id="btn-then">요청하기</button>
+<script>
+
+  // then 메소드의 체이닝 (연속해서 호출하기)
+  document.getElementById('btn-then').addEventListener('click', () => {
+    new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('get', 'https://jsonplaceholder.typicode.com/users/1');
+      xhr.addEventListener('load', () => {
+        resolve(JSON.parse(xhr.responseText));
+      })
+       xhr.send();
+      
+    })
+    .then(user => user.address)  // then() 메소드의 콜백 함수가 반환한 값은 promise (user.address가 저장된 promise)
+    .then(address => address.geo) // then() 메소드의 콜백 함수가 반환한 값은 promise (address.geo가 저장된 promise)
+    .then(geo => console.log('geo:', geo));
+     
+  })
+
+
+
+</script>
+
+
 </body>
 </html>
