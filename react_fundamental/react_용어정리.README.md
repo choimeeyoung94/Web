@@ -143,7 +143,6 @@ ReactDOM.createRoot(document.getElementById('root3')).render([
 
 children
 - 컴포넌트 안에 직접 넣은 내용 전체를 가리킨다
-```
   const GiftCard1 = (props) => { //어떻게 돼지????
     return (
       <>
