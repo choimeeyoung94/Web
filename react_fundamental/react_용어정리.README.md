@@ -1,5 +1,13 @@
+element
+- 리액트 애플리케이션을 구성하는 가장 작은 단위
+
 React.createElement()를 사용해서 element를 만든다
+
 ReactDOM.createRoot().render()를 사용해서 브라우저에 대상을 랜더링 해준다
+
+랜더링
+- ReactDOM 은 Element 와 그 자식 Element 를 이전의 Element 와 비교하고 변경된 부분만 업데이트 한다
+
 JSX:
 - React에서 UI를 정의하기 위해 사용하는 자바스크립트 확장 문법
 - JSX 내부에서 {}를 사용하여 자바스크립트 변수, 연산, 함수 호출 주석 등을 넣을 수 있다
@@ -107,6 +115,36 @@ props children
 - 컴포넌트를 호출할 때 전달한 내부 요소를 의미
 ```
   const GiftCard1 = (props) => {
+    return (
+      <>
+        <h1>{props.children}</h1>
+      </>
+    )
+  }
+  const GiftCard2 = (props) => {
+    const {children} = props;
+    return (
+      <h1>{children}</h1>
+    )
+  }
+
+  const GiftCard3 = ({children}) => {
+    return (
+      <h1>{children}</h1>
+    )
+  }
+
+ReactDOM.createRoot(document.getElementById('root3')).render([
+  <GiftCard1>3만원</GiftCard1>, // props.children은 컴포넌트 태그 사이에 감싸진 내용을 참조할 수 있게 해주는 prop이다
+  <GiftCard2>5만원</GiftCard2>,
+  <GiftCard3><em>10만원</em></GiftCard3>,
+]);
+```
+
+children
+- 컴포넌트 안에 직접 넣은 내용 전체를 가리킨다
+```
+  const GiftCard1 = (props) => { //어떻게 돼지????
     return (
       <>
         <h1>{props.children}</h1>
