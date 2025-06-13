@@ -278,8 +278,9 @@ class Spin2 extends React.Component {
 ```
 
 - 증가 버튼을 클릭하면 increaseHandler 함수의 this.setState() 메소드가 호출되어 이전 상태 값을 1 증가시킨 후 브라우저에 리랜더링 된다
+- - 객체 안에 number key값이 1 증가된다
 - 감소 버튼을 클릭하면 decreaseHandler 함수의 this.setState() 메소드가 호출되어 이전 상태 값을 1 감소시킨 후 브라우저에 리랜더링 해준다
-
+- - 객체 안에 number key값이 1 감소된다
 ```
  class Spin2 extends React.Component {
 
