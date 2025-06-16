@@ -36,6 +36,328 @@
   1) 값을 직접 전달하는 방식
   2) 함수(이전 상태 값을 받아 새로운 상태 값을 반환하는 함수)를 전달하는 방식 (함수형 업데이트)
 -->
+<div id="root1"></div>
+<script type="text/babel">
+  {
+
+    // state: 컴포넌트 내부에서 관리하는 데이터
+    const Spin1 = () => {
+
+      // state =  number: 0
+      // number 변경함수: setNumber
+      const [number, setNumber] = React.useState(0);
+
+      // 증가용 이벤트 핸들러
+      const increaseHandler = (e) => {
+        // number = number + 1; 사용할 수 없는 표현식이다
+        setNumber(number + 1)  // 반드시 상태 업데이트 함수를 사용해야만 한다
+      }
+
+      const decreaseHandler = (e) => {
+        setNumber(number - 1);
+      }
+
+      return(
+        <>
+          <h1>{number}</h1>
+          <button onClick={increaseHandler}>▲</button>
+          <button onClick={decreaseHandler}>▽</button>
+        </>
+      )  
+    }
+        
+    ReactDOM.createRoot(document.getElementById('root1')).render(<Spin1 />);
+
+  }
+
+
+
+</script>
+
+<hr>
+
+<div id="root2"></div>
+<script type="text/babel">
+
+  const Spin2 = () => {
+    const [number, setNumber] = React.useState(0);
+
+  const increaseHandler = (e) => {
+      // 함수형 업데이트
+      // 현재 state를 전달하고 새로운 state를 반환하는 콜백함수를 사용
+      setNumber(prevNumber => prevNumber + 1);
+    }
+
+  const decreaseHandler = (e) => {
+      setNumber(prevNumber => prevNumber - 1);
+    }
+
+    return(
+      <>
+        <h1>{number}</h1>
+        <button onClick={increaseHandler}>▲</button>
+        <button onClick={decreaseHandler}>▼</button>
+      </>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root2')).render(<Spin2/>);
+
+  
+  
+
+</script>
+
+<hr>
+<div id="root3"></div>
+<script type="text/babel">
+  const InputComponent = () => {
+    
+    const [text, setText] = React.useState('');
+
+    // 입력상자에 입력한 내용이 변하면 발생하는 이벤트
+    const handleChange = (e) => {
+      setText(e.target.value);
+    }
+
+    return (
+      <>
+        <input  
+          type="text" 
+          value={text}
+          placeholder="값을 입력하세요"
+          onChange={handleChange}
+        />
+        <h1>{text}</h1>      
+      </>
+    )
+    
+  }
+  ReactDOM.createRoot(document.getElementById('root3')).render(<InputComponent />);
+</script>
+
+<hr>
+<div id="root4"></div>
+<script type="text/babel">
+  const CheckboxComponent = () => {
+    const [checkedStatus, setCheckValue] = React.useState(false);
+    const checkSateChange = (e) => {
+      //console.log(e.target.checked);
+      setCheckValue(e.target.checked);
+    }
+
+    return (
+      <>
+        <input 
+          type="checkbox"
+          id="chk"
+          checked={checkedStatus}
+          onChange={checkSateChange}
+        />
+        <label htmlFor="chk">체크박스</label>
+        {/* 리액트는 boolean 값을 표현식으로 화면에 표시할 수 없다. 문자열로 바꿔서 표시한다 */}
+        <h1>{checkedStatus ? 'true' : 'false'}</h1> 
+      </>
+
+
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root4')).render(<CheckboxComponent />)
+</script>
+
+<hr>
+<div id="root5"></div>
+<script type="text/babel">
+  const SelectedComponent = () => {
+    // select 태그와 state
+    // 선택한 통신사를 화면에 표시
+    
+    const [selectedValue, setSelectedValue] = React.useState('');
+
+    const selectOnChange = (e) => {
+      setSelectedValue(e.target.value);
+    }
+  
+    // value가 필요한 이유
+    // 사용자가 어떤 옵션을 선택하면 onChange로 state 업데이트 후 value로 반영
+    return (
+      <>
+        <select onChange={selectOnChange} value={selectedValue}>
+          <option value="" hidden>통신사선택</option>
+          <option value="SKT">SKT</option>
+          <option value="KT">KT</option>
+          <option value="lgU+">lgU+</option>
+        </select>
+       
+     
+        <h1>{selectedValue}</h1>
+      </>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root5')).render(< SelectedComponent />);
+
+</script>
+
+<hr>
+<div id="root6"></div>
+<script type="text/babel">
+  // 로그인 화면과 state (state 2개 사용)
+  const LoginComponent = () => {
+    
+    const [loginInputValue, setLoginInputValue] = React.useState('');
+    const [passwordInputValue, setPasswordInputValue] = React.useState('');
+
+    // submit 이벤트 핸들러
+    const handleSubmit = (e) => {
+      if (loginInputValue == "" || passwordInputValue == "") {
+          alert('아이디와 비밀번호 입력을 확인하세요');
+          e.preventDefault(); // form의 기본 동작을 막기 위해서 넣는다
+          return; // 이벤트 핸들러의 실행을 막는다
+      }
+      // 정상동작은 else에 넣지 않는다
+      alert(`id: ${loginInputValue}, pw: ${passwordInputValue}`);
+    }
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <input type="text" 
+               value={loginInputValue} 
+               onChange={e => setLoginInputValue(e.target.value)}
+               placeholder="아이디를 입력하세요"
+        />  
+        <br/>
+        <input type="password"        
+               value={passwordInputValue} 
+               onChange={e => setPasswordInputValue(e.target.value)}
+               placeholder="비밀번호를 입력하세요"
+        />
+        <button type="submit">로그인</button>
+      </form>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root6')).render(<LoginComponent />);
+</script>
+
+<hr>
+<div id="root7"></div>
+<script type="text/babel">
+  const LoginComponent2 = () =>{
+
+    // state (id와 pw를 가진 user 객체)
+    const [user, setUser] = React.useState({
+      userId: '',
+      userPw: '',
+    })
+
+    // 입력상자의 변경 이벤트 핸들러
+    const handleChange = (e) => {
+      //console.log(e.target); 입력하고 있는 입력 상자 확인
+      //console.log(e.target.id, e.target.value); 입력하고 있는 입력 상자의 id와 입력값
+      setUser({
+        // 이전 상태를 유지 하면서 특정 필드만 바꾼다
+        ...user, // 기존 user객체가 가진 값을 그대로 사용 (기존 상태를 복사)
+        [e.target.id]: e.target.value, //입력하고 있는 입력 상자(id, pw)의 입력값을 덮어쓰기 한다
+                                       // [e.target.id]는 현재 입력한 필드를 동적으로 선택해서 업데이트 한다
+                                       // 대괄호[]는 프로퍼티를 변수나 표현식의 값으로 동적으로 지정하는 경우에 반드시 필요한 ES6 문법
+      })
+    }
+
+    // 서브밋 이벤트 핸들러
+    const handleSubmit = (e) => {
+      if (user.userId === '' || user.userPw === '') {
+        alert('아이디와 비밀번호 입력을 확인하세요');
+        e.preventDefault();
+        return;
+      }
+      alert(`userId: ${user.userId}, userPw: ${user.userPw}`);
+      
+
+    }
+
+    return (
+      <form action="/login" 
+            method="post"
+            onSubmit={handleSubmit}>
+        <input  id="userId" // id값은 state user 객체의 id 프로퍼티 이름과 동일하게 맞춰야 한다
+                type="text" 
+                value={user.userId} 
+                placeholder="아이디를 입력하세요"
+                onChange = {handleChange}
+        />
+        <br/>
+        <input id="userPw"  // id값은 state user 객체의 id 프로퍼티 이름과 동일하게 맞춰야 한다
+               type="password"
+               value={user.userPw}
+               placeholder="비밀번호를 입력하세요"
+               onChange = {handleChange}/> 
+        <br/>
+        <button>로그인</button>
+      </form>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root7')).render(<LoginComponent2 />);
+
+</script>
+<hr>
+<div id="root8"></div>
+<script type="text/babel">
+  const AnimalComponent = () => {
+    // state
+    const [inputValue, setInputValue] = React.useState('');
+    const [animals, setAnimal] = React.useState([]);
+
+    // 입력 상자 입력 이벤트
+    const handleChange = (e) => {
+      setInputValue(e.target.value);
+    }
+
+    // 추가 등록 이벤트
+    const handleClick = (e) => {
+      if (inputValue.trim() === "") {
+        alert('동물 이름을 입력하세요');
+        return;
+      }
+      setAnimal([...animals, inputValue]); // 기존 animals 배열 요소 전부 + 새로 입력한 inputValue
+
+      // 입력상자 초기화하기
+      setInputValue('');
+    }
+
+    const handleDelete = (deleteIndex) => {
+      setAnimal(animals.filter((_, index) => index !== deleteIndex));
+    }
+
+    return (
+     <>
+      <input 
+        type="text"
+        placeholder="동물 입력"
+        value={inputValue}
+        onChange={handleChange}
+     />
+     <button 
+        type="button"
+        onClick={handleClick}
+     >추가</button>
+     <ul>
+      {animals.map((animal, index) => (
+        <>
+          <li key={index}>{animal}</li>
+          <button onClick={() => handleDelete(index)}>삭제</button>
+        </>
+      ))} 
+     </ul>
+     </>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root8')).render(<AnimalComponent/>);
+
+</script>
+
 
 </body>
 </html>
