@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Todo List</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const TodoAppend = ({description, onChange, onClick}) => {
+      return (
+        <div className="todo-append">
+          <label htmlFor="description">할 일 세부 내용</label>
+          <input type="text" id="description" placeholder='할일을 입력하세요' onChange={onChange} value={description}/>
+          <button type="button" onClick={onClick}>추가</button>
+        </div>
+      )
+    }
+    const TodoListItem = ({todo, onChange, onClick}) => {
+      return (
+        <div className="todo">
+          <input type="checkbox" id={todo.todoNo} onChange={onChange}/>
+          <label htmlFor={todo.todoNo} style={{textDecoration: todo.isDone ? 'line-through' : 'none'}}>{todo.description}</label>
+          <button type="button" data-todo-no={todo.todoNo} onClick={onClick} >X</button>
+
+        </div>
+      )
+    }
+    const TodoList = () => {
+      // state
+      const [todos, setTodos] = React.useState([]); // 할일 리스트
+      const [todo, setTodo] = React.useState({
+        todoNo: 1,
+        description: '',
+        isDone: false,
+      })
+      // description 이벤트 핸들러
+      const onDescriptionChange = (e) => {
+        setTodo({
+          ...todo, // 기존 todo 모두 그대로 사용
+          description: e.target.value, // description 값을 사용자가 입력한 값으로 덮어쓰기 한다
+        })
+      }
+      // 추가 버튼 이벤트 핸들러
+      const onAddClick = (e) => {
+        if (todo.description.trim() === '') {// trim()를 사용하여 문자열 앞뒤의 공백을 제거
+            alert('할 일 세부 내용을 입력하세요');
+            return;
+        }
+        setTodos(todos.concat(todo)); // todos 배열에 todo를 연결한 새로운 배열을 전달한다
+        // todo 초기화
+        setTodo({
+          todoNo: todo.todoNo + 1,
+          description: '',
+          isDone: false,
+        });
+      }
+
+      // 삭제 버튼 이벤트 핸들러
+      const onDeleteClick = (e) => {
+        setTodos(todos.filter(todo => Number(e.target.dataset.todoNo) !== todo.todoNo));
+      }
+
+      // 체크박스 체크 변경 이벤트 핸들러
+      const onCheckboxChange = (e) => {
+        setTodos(
+          todos.map(todo => {
+            //  e.target.id는 문자열 타입이다
+            if (todo.todoNo == e.target.id) {
+              return { ...todo, isDone: e.target.checked };
+            } 
+            return todo;            
+          })
+        );
+      };
+
+      return (
+        <>
+          <TodoAppend description={todo.description}
+                      onChange={onDescriptionChange} 
+                      onClick={onAddClick}/>
+          <div className="todos">
+            
+              {todos.map((todo, index) =>  (
+                // div를 <TodoListItem> 컴포넌트로 분리해 보세요.
+                <TodoListItem 
+                    key={todo.todoNo}  
+                    todo={todo} 
+                    onChange={onCheckboxChange}
+                    onClick={onDeleteClick} />
+            ))} 
+            
+          </div>
+        </>
+      )
+    }
+
+
+
+    const TodoHeader = () => {
+     return (
+       <div className="header">
+        <h1>오늘의 TodoList ({new Date().toLocaleDateString()})</h1>
+        
+       </div>
+     )
+    }
+
+    const TodoBody = () => {
+     return (
+       <div className="body">
+        <TodoList/> 
+       </div>
+     )
+    }
+
+
+
+    const TodoFooter = () => {
+      return (
+        <div className="footer">
+          <p>Copyright 2025. All rights reserved.</p>
+        </div>
+      )
+    }
+    
+    const TodoApp = () => {
+        return (
+          <>
+            <TodoHeader/>
+            <TodoBody/>
+            <TodoFooter/>
+          </>
+        )
+     }
+
+
+
+     ReactDOM.createRoot(document.getElementById('root')).render(<TodoApp/>);   
+  </script>
+</body>
+</html>

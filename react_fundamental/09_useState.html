@@ -357,6 +357,129 @@
   ReactDOM.createRoot(document.getElementById('root8')).render(<AnimalComponent/>);
 
 </script>
+<hr>
+<div id="root9"></div>
+<script type="text/babel">
+  // 연습) 좋아요 버튼
+  // 누를때마다 버튼 텍스트가 "좋아요", "싫어요"가 반복되도록 컴포넌트를 구현
+   const LikeComponent = () => {
+    const [heart, setHeart] = React.useState('싫어요');
+
+    const handleChange = (e) => {
+      setHeart(prev => prev === "좋아요" ? "싫어요" : "좋아요");
+    };
+
+    return (
+      <>
+        <button type="button" onClick={handleChange}>{heart}</button>
+      </>
+    );
+  };
+
+  ReactDOM.createRoot(document.getElementById('root9')).render(<LikeComponent />);
+</script>
+<hr>
+<div id="root10"></div>
+<script type="text/babel">
+  // 연습) 배열에 값 추가하기
+  // 1추가 버튼 클릭 -> 배열에 1추가 => 2추가 버튼 클릭 => 배열에 2추가
+  // 배열에 저장된 모든 요소를 화면에 출력하세요
+  const ArrayComponent = () => {
+    const [number, setNumber] = React.useState(1);
+    const [numbers, setNumbers] = React.useState([]);
+
+    const handleClick = (e) => {
+      setNumber(number + 1);
+      setNumbers([...numbers, number]);
+    }
+
+    return(
+      <>
+        <button onClick={handleClick}>{number}추가</button>
+        <div>
+          {numbers.map((number, i) => (
+            <span key={i} style={{marginRight: 10}}>{number}</span>
+          ))}
+        </div>
+      </>
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root10')).render(<ArrayComponent/>);
+</script>
+<hr>
+<div id="root11"></div>
+<script type="text/babel">
+  // 연습) 휴대전화번호를 입력 받는 입력 상자를 반환하는 컴포넌트 구현
+  // 휴대전화번호를 입력할 때 하이픈 을 입력하면 모든 하이픈 ('-')을 빈 문자열('')로 바꿔라
+  // String의 replace 함수를 이용해서 모든 하이픈을 빈 문자열로 바꾸면 된다
+  const PhoneComponent = () => {
+    const [phoneNumber, setPhoneNumber] = React.useState('');
+
+    const handleChange = (e) => {
+      setPhoneNumber(e.target.value.replace('-', '').substring(0,11));
+    }
+
+    return (
+      <>
+        <input type="text" value={phoneNumber} onChange={handleChange}/>
+        <h1>{phoneNumber}</h1>
+      </>
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root11')).render(<PhoneComponent />);
+</script>
+<hr>
+<div id="root12"></div>
+<script type="text/babel">
+  // 연습) 입력상자에 새로 입력한 값과 이전에 입력되어 있던 값을 도무 출력하는 컴포넌트 구현
+  const InputComponent2 = () => {
+    const [currentInput, setCurrentInput] = React.useState('');
+    const [prevValue, setPrevValue] = React.useState('');
+
+    const handleChange = (e) => {
+      let newValue = e.target.value;
+      setPrevValue(currentInput);
+      setCurrentInput(newValue);
+    }
+    return (
+      <>
+        <input type="text" 
+               value={currentInput} 
+               onChange={handleChange}/>
+        <h1>현재값: {currentInput}</h1>
+        <h1>이전값: {prevValue}</h1>
+      </>
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root12')).render(<InputComponent2/>)
+  
+</script>
+<hr>
+<div id="root13"></div>
+<script type="text/babel">
+  const ButtonsComponent = () => {
+    // 버튼 3개를 화면에 표시하세요
+    // 스위치1 OFF
+    // 스위치2 OFF
+    // 스위치3 OFF
+    // 각 스위치를 클릭할때마다 ON/OFF를 바꾸세요
+    // state는 하나의 배열만 사용하세요
+    const [statusArray, setStatusArray] = React.useState([false, false, false]);
+
+    const handleClick = (index) => {
+      const newStatusArray = statusArray.map((status, i) => i === index ? !status : status);
+      setStatusArray(newStatusArray);
+    }
+    return (
+      <>
+        <button onClick={() => handleClick(index)}>스위치1 {status}</button>
+        <button onClick={() => handleClick(index)}>스위치2 {status}</button>
+        <button onClick={() => handleClick(index)}>스위치3 {status}</button>
+      </>
+    )
+  }
+  ReactDOM.creatRoot(document.getElementById('root13')).render(<ButtonsComponent/>);
+</script>
 
 
 </body>

@@ -18,7 +18,7 @@
   
 2. React.useEffect() 구문
   1) 형식
-    React.useEffect(setup, [dependencies]);
+    React.useEffect(setup[, dependencies]);
   2) 설명
     (1) setup
       - 사이드 이펙트가 동작할 코드가 작성된 함수입니다.
@@ -30,10 +30,11 @@
 
 
 3. 의존성 배열(dependencies)에 따른 사이드 이펙트 실행 시점
+  state값이 바뀔때 마다 리렌더링이 된다
   1) 의존성 배열이 없는 경우
     ▶︎ 컴포넌트가 렌더링될 때마다 실행
-  2) 의존성 배열이 빈 배열([])인 경우
-    ▶︎ 컴포넌트가 처음 마운트될 때 한 번만 실행 (componentDidMount 역할)
+  2) 의존성 배열이 빈 배열([])인 경우 
+    ▶︎ 컴포넌트가 처음 마운트될 때 한 번만 실행 (componentDidMount 역할) (최초 랜더링 될때)
   3) 의존성 배열에 특정 값이 있는 경우
     ▶︎ 해당 값이 변경될 때마다 실행 (componentDidUpdate 역할)
 
@@ -55,6 +56,139 @@
       };
     }, []);
 -->
+
+<!-- 버튼을 클릭하면 현재 시간을 출력하는 컴포넌트 만들기-->
+<div id="root1"></div>
+<script type="text/babel">
+  const Now = () => {
+    // state를 바꾸면 재렌더링 된다
+    const [now, setNow] = React.useState(new Date().toLocaleTimeString());
+    
+    React.useEffect(
+      () => {
+        alert('useEffect 동작')
+      }// 의존 배열이 없으면 모든 렌더링에서 useEffect에 등록한 함수가 동작한다. 최초 렌더링에서 한번 동작
+    )
+    
+    const handleClick = (e) => {
+      setNow(new Date().toLocaleTimeString());
+    }
+  
+  
+    return (
+      <>
+        <button type="button" onClick={handleClick}>Now</button>
+        <h1>{now}</h1>
+      </>
+    )
+   
+  }
+  const Now2 = () => {
+    // state를 바꾸면 재렌더링 된다
+    const [now, setNow] = React.useState(new Date().toLocaleTimeString());
+    
+    React.useEffect(
+      () => {
+        alert('useEffect 동작')
+      }, [])// 의존 배열이 빈 배열이면 최초 렌더링시에만 useEffect에 등록한 함수가 동작한다
+    
+    const handleClick = (e) => {
+      setNow(new Date().toLocaleTimeString());
+    }
+  
+  
+    return (
+      <>
+        <button type="button" onClick={handleClick}>Now</button>
+        <h1>{now}</h1>
+      </>
+    )
+  }
+
+  const Today = () => {
+    const [date, setDate] = React.useState({
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
+    })
+    
+    React.useEffect(() => {
+      alert('useEffect 동작');
+    }, [date.year, date.month]); // 의존 배열에 명시한 date.year, date.month 값이 변하면 useEffect이 동작 (useEffect의 최초 렌더링은 무조건 동작)
+
+    // handleYear, handleMonth, handleDay 이벤트를 handleChange 이벤트로 모아보기
+    const handleChange = (e) => {
+      setDate({
+        ...date,
+        [e.target.id]: e.target.value,
+      })
+    }
+    
+    return (
+      <>
+        <input id="year" type="text" placeholder="년도" value={date.year} onChange={handleChange}/>
+        <input id="month" type="text" placeholder="월" value={date.month} onChange={handleChange}/>
+        <input id="day" type="text" placeholder="일" value={date.date} onChange={handleChange}/>
+        <h1>{JSON.stringify(date)}</h1>
+      </>
+    )
+  }
+
+
+
+  ReactDOM.createRoot(document.getElementById('root1')).render(<Today/>);
+</script>
+<hr>
+<div id="root2"></div>
+<script type="text/babel">
+
+  // 연습) 이름, 나이, 닉네임을 가지는 유저 state를 작성
+  // 이름을 입력할 때 공백 검사를 수행해서 공백이면 경고창을 띄운다
+  // 나이를 입력할 대 범위 검사를 수행해서 0 미만 120 초과이면 경고창을 띄운다
+  // 닉네임을 입력할 때는 아무 검사도 수행하지 않는다
+  // 화면에는 입력한 이름, 나이, 닉네임을 출력한다
+  const ValidateInput = () => {
+    const [user, setUser] = React.useState({
+      name: ' ',
+      age: 0,
+      nickname:'',
+    });
+
+    React.useEffect(() => {
+      if (user.name.trim().length == 0) {
+        alert('name에 공백이 있습니다.');
+      }
+
+      if (user.age < 0 || user.age > 120) {
+        alert('age가 범위를 초과했습니다.');
+      }
+    }, [user.name, user.age]);
+
+    const handleChange = (e) => {
+      setUser({
+        ...user,
+        [e.target.id]: e.target.value,  
+      })
+    }
+
+
+    return (
+      <>
+        <input id="name"     type="text" onChange={handleChange}/>
+        <input id="age"      type="text" onChange={handleChange}/>
+        <input id="nickname" type="text" onChange={handleChange}/>
+        <h1>{JSON.stringify(user)}</h1>
+      </>
+    )
+    
+  }
+
+  ReactDOM.createRoot(document.getElementById('root2')).render(<ValidateInput />);
+
+
+</script>
+
+
 
 </body>
 </html>
