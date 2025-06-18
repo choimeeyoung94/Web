@@ -13,7 +13,7 @@
 <!--
 1. React.useEffect()
   1) 함수형 컴포넌트에서 사이드 이펙트(side effect)를 처리하기 위한 훅(Hooks) 입니다.
-  2) 사이드 이펙트란 데이터 가져오기, 구독 설정, DOM 직접 수정, 타이머 설정 등 컴포넌트 외부와 상호작용하거나 비동기 로직을 실행하는 작업을 의미합니다.
+  2) 사이드 이펙트란 데이터 가져오기(API 호출), 구독 설정, DOM 직접 수정, 타이머 설정 등 컴포넌트 외부와 상호작용하거나 비동기 로직을 실행하는 작업을 의미합니다.
   
   
 2. React.useEffect() 구문
@@ -22,7 +22,7 @@
   2) 설명
     (1) setup
       - 사이드 이펙트가 동작할 코드가 작성된 함수입니다.
-      - cleanup 코드를 가지고 있는 함수를 반환할 수 있습니다. (선택)
+      - cleanup 코드를 가지고 있는 함수를 반환할 수 있습니다. (선택) - 사이드이펙트에서(setup) 사용했던 자원을 정리한다
       - setup 함수에서 return한 cleanup 함수는 컴포넌트가 언마운트될 때 실행됩니다. (componentWillUnmount 역할)
     (2) dependencies
       - 의존성 배열입니다. 필수가 아닌 선택 인자입니다.
@@ -136,7 +136,7 @@
 
 
 
-  ReactDOM.createRoot(document.getElementById('root1')).render(<Today/>);
+  //ReactDOM.createRoot(document.getElementById('root1')).render(<Today/>);
 </script>
 <hr>
 <div id="root2"></div>
@@ -183,12 +183,158 @@
     
   }
 
-  ReactDOM.createRoot(document.getElementById('root2')).render(<ValidateInput />);
+ // ReactDOM.createRoot(document.getElementById('root2')).render(<ValidateInput />);
 
 
 </script>
+<hr>
+<div id="root3"></div>
+<script type="text/babel">
+  const ConsoleTimer = () => {
+    React.useEffect(() => {
+      // setup 함수가 수행하는 작업
+      console.log('timer start');
+      const intervalId = setInterval(() => {
+        console.log(new Date().toLocaleTimeString());
+      }, 1000);
+      // cleanup 함수 반환 (setup 함수가 사용한 자원 정리, ConsoleTimer 컴포넌트의 렌더링이 끝나면 cleanup 함수가 동작)
+      return () => {
+        clearInterval(intervalId);
+        console.log('Timer stop');
+      }
+    }, []);
+  }
+
+  const ConsoleTimerButton = () => {
+    const [flag, setFlag] = React.useState(false);
+    const handleClick = e => {
+      setFlag(!flag);
+    }
+    return (
+      <>
+        <button onClick={handleClick}>Timer {flag ? 'ON' : 'OFF'}</button>
+        {flag && <ConsoleTimer/> }
+      </>
+    )
+  }
+
+  //ReactDOM.createRoot(document.getElementById('root3')).render(<ConsoleTimerButton />);
+</script>
+<hr>
+<div id="root4"></div>
+<script type="text/babel">
+  // 연습) 타이머 시작 버튼을 클릭하면 5초 타이머가 동작하도록 컴포넌트를 구현
+  // 화면에 5 4 3 2 1 0 순차적으로 표시된다
+  const Timer2 = ({seconds}) => {
+    const [count, setCount] = React.useState(seconds);
+    const [start, setStart] = React.useState(false);
+    React.useEffect(() => {
+      if (start == false) return 
+      if (count == 0) 
+        return;
+      const intervalId = setTimeout(() =>{
+        setCount(count -1);
+        
+      }, 1000); // 1초 후에 count 값을 감소시킨다
+      return () => clearTimeout(intervalId); // 메모리 누수를 정리해준다
+    }, [count, start]);
+
+      return (
+        <>
+          <button onClick={() => setStart(true)} disabled={start}>타이머시작</button>
+          <h1>{count}</h1>
+        </>
+      ) 
+  }
+  ReactDOM.createRoot(document.getElementById('root4')).render(<Timer2 seconds={5}  />);
+</script>
+<hr>
+<div id="root5"></div>
+<script type="text/babel">
+  // window 이벤트 리스너와 cleanup 함수
+  const KeyLogger = () => {
+    React.useEffect(() => {
+      // 할 일 (window 이벤트 리스너 등록)
+      const handleKeydown = (e) => {
+        console.log('눌린 키: ', e.key);
+      }
+      window.addEventListener('keydown', handleKeydown);
+      // cleanup (window 이벤트 리스너 해제)
+      return () => window.removeEventListener('keydown', handleKeydown);
+    },[]) // 최초 렌더링할때만 동작
+    return (
+      <div>
+        콘솔을 열고 아무 키나 눌러보세요.
+      </div>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root5')).render(<KeyLogger/>);
+</script>
+<hr>
+<div id="root6"></div>
+<script type="text/babel">
+  // 연습) 창 너비를 변경하면 (resize 이벤트) 화면에 현재 창의 너비를 출력
+  // 창 너비는 window.innerWidth 값을 확인하면 된다
+
+  const WindowComponent = () => {
+    const [size, setSize] = React.useState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+    
+    React.useEffect(() => {
+      const windowResize = (e) => {
+        setSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        })       
+      }
+      window.addEventListener('resize', windowResize);
+      return () => window.removeEventListener('resize', windowResize);
+    }, []);
+    return (
+      <h1>현재 창 너비: {size.width}px , 현재 창 높이: {size.height}px</h1>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root6')).render(<WindowComponent />);
 
 
+</script>
+<hr>
+<div id="root7"></div>
+<script type="text/babel">
+
+  const FetchComponent = () => {
+    const [todos, setTodos] = React.useState([]);
+    React.useEffect(() => {
+      fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonData => setTodos(jsonData)); // API로부터 가져온 데이터를 state에 저장
+    },[])// 최초 렌더링할 때 가져온 데이터 출력
+    return (
+      <>
+        {todos.map((todo) =>  (<div key={todo.id}>{todo.title}</div>))}          
+      </>
+    )
+  }
+
+  ReactDOM.createRoot(document.getElementById('root7')).render(<FetchComponent/>)
+</script>
+<hr>
+<div id="root8"></div>
+<script type="text/babel">
+  const WeatherComponen = () => {
+    React.useEffect(() => {
+      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={f9632afdb4ce9ba86879299eefc7ee76}`)
+    })
+  }
+
+
+</script>
 
 </body>
 </html>

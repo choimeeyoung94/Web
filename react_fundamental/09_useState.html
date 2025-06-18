@@ -464,23 +464,48 @@
     // 스위치3 OFF
     // 각 스위치를 클릭할때마다 ON/OFF를 바꾸세요
     // state는 하나의 배열만 사용하세요
-    const [statusArray, setStatusArray] = React.useState([false, false, false]);
+    const [switches, setSwitches] = React.useState([false, false, false]);
 
-    const handleClick = (index) => {
-      const newStatusArray = statusArray.map((status, i) => i === index ? !status : status);
-      setStatusArray(newStatusArray);
+    // click 이벤트 발생 시 동작하는 함수
+    const toggleSwitch = id => {
+      setSwitches(switches.map((elem, i) => (id === i ? !elem : elem)))
     }
     return (
       <>
-        <button onClick={() => handleClick(index)}>스위치1 {status}</button>
-        <button onClick={() => handleClick(index)}>스위치2 {status}</button>
-        <button onClick={() => handleClick(index)}>스위치3 {status}</button>
+        {switches.map((elem, i) => (
+          <button key={i} onClick={
+                            () => toggleSwitch(i)}>{`스위치 ${i + 1}`
+                          } {
+                            elem ? "ON" : "OFF"
+                          }</button>
+        ))}
       </>
     )
   }
-  ReactDOM.creatRoot(document.getElementById('root13')).render(<ButtonsComponent/>);
+  ReactDOM.createRoot(document.getElementById('root13')).render(<ButtonsComponent />);
 </script>
+<hr>
+<div id="root15"></div>
+<script type="text/babel">
+  // 연습) 이메일과 비밀번호를 입력 받은 뒤 검증 버튼을 클릭하면
+  // 각 입력 상자 아래에 유효성 검사 결과를 출력하세요
+  // 이메일: 이메일 형식이 아니면 "이메일 형식이 아닙니다"
+  // 비밀번호: 4글자 미만이면 "비밀번호는 4자 이상입니다"
+  // 이메일, 비밀번호, 유효성 검사 결과 모두 state로 관리해야 합니다
 
+  const ValidateInput = () => {
+
+    return (
+      <>
+        <input type="email" placeholder="이메일을 입력하세요"/>
+        
+      </>
+    )
+  }
+
+
+
+</script>
 
 </body>
 </html>
