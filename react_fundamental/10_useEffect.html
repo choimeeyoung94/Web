@@ -333,19 +333,60 @@
   //       랜덤 문자열을 그대로 잘 입력하고 Enter를 누르면, 입력하는데 걸린 시간을 경고창에 출력하세요.
   //       입력을 잘못한 뒤 Enter를 누르면, 아무 일도 일어나지 않도록 처리하세요.
 
-  const RandomUUID = () => {
-    const [randomUUid, setRandomUUid] = React.useState('');
+  const Typing = ({randText, setIsDone}) => {
+
+    const [ input, setInput ] = React.useState('');
+
     React.useEffect(() => {
-      setRandomUUid(window.crypto.randomUUID())
-    },[])
+      const begin = new Date().getTime();
+      return () => {
+        const end = new Date().getTime();
+        const due = end - begin;
+        alert(`입력에 걸린 시간 : ${due / 1000}s`);
+      }
+    }, []);
+
+    const handleKeydown = (e) => {
+      if (e.key === 'Enter') {
+        setIsDone(input === randText);
+      }
+    }
+
     return (
       <>
-        <h1>{randomUUid}</h1>
-        <input type="text"  onKeyDown={(e) => activeEnter(e)}/>
+        <h1>아래 텍스트를 그대로 입력한 뒤 Enter를 누르세요!</h1>
+        <h1>{randText}</h1>
+        <input 
+          type="text" size="50" placeholder="Try"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={handleKeydown}/>
       </>
     )
   }
-  ReactDOM.createRoot(document.getElementById('root8')).render(<RandomUUID />);
+
+
+
+  const TypingApp = () => {
+    const [randText, setRandText] = React.useState('');
+    const [isDone, setIsDone] = React.useState(false);
+    const [visible, setVisible] = React.useState(false);
+
+    React.useEffect(() => {
+      setRandText(window.crypto.randomUUID().split('-')[0]);
+    },[]);
+
+    React.useEffect(() => {
+      setVisible(!visible); 
+    }, [isDone]);
+
+    return (
+      <>
+        {visible && <Typing randText={randText} setIsDone={setIsDone}/>} // visible 값이 false가 되면 Typing 컴포넌트가 언마운트 돼면서 Typing 컴포넌트에 있는 useEffect의 return이 실행된다
+      </>
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root8')).render(<TypingApp />);
 
 </script>
 
