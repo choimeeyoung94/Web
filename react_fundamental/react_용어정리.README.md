@@ -1,7 +1,6 @@
 #### element
 - 리액트 애플리케이션을 구성하는 가장 작은 단위
-- React.createElement()를 사용해서 element를 만든다
-
+- React.createElement() 또는 JSX를 사용해서 element를 만든다
 
 #### 랜더링
 - 컴포넌트가 반환하는 UI 요소를 기반으로 사용자 화면을 구성하거나 갱신하는 과정을 의미한다
@@ -12,11 +11,12 @@
 - React에서 UI를 정의하기 위해 사용하는 자바스크립트 확장 문법
 - JSX 내부에서 {}를 사용하여 자바스크립트 변수, 연산, 함수 호출 주석 등을 넣을 수 있다
 - 삼항 연산자, 논리 연산자 등을 사용해 조건에 따라 다른 내용을 렌더링 할 수 있다
-React.Fragment
+
+#### React.Fragment
 - 여러 요소를 그룹화 할때 사용하는 특수한 컴포넌트
-컴포넌트
+#### 컴포넌트
 - 특정 기능이나 UI를 담당하는 독립적인 코드 블록
-클래스형 컴포넌트
+##### 클래스형 컴포넌트
 - React.Component를 상속 받아서 작성
 ```
   class ClassComp extends React.Component {
@@ -28,7 +28,7 @@ React.Fragment
   
 ```
 
-함수형 컴포넌트
+##### 함수형 컴포넌트
 ```
   const FunctionComp = () => {
     return (
@@ -111,7 +111,7 @@ const NameCard1 = (props) => {
   ReactDOM.createRoot(document.getElementById('root2')).render(<App/>);
 ```
 
-props children
+#### props children
 - 컴포넌트를 호출할 때 전달한 내부 요소를 의미
 ```
   const GiftCard1 = (props) => {
@@ -332,4 +332,31 @@ class Spin2 extends React.Component {
 2. Updating (업데이트) : props나 state가 변경되어 다시 렌더링될 때
 3. Unmounting (언마운트) : 컴포넌트가 DOM에서 제거될때
 
+#### fetch
+- HTTP 파이프라인을 구성하는 요청과 응답 요소를 JavaScript에서 접근하고 조작할 수 있는 인터페이스를 제공
+- fetch() 전역 함수를 통해 네트워크의 리소스를 쉽게 비동기적으로 취득할 수 있다
+- fetch api는 Promise 기반으로 개선되었다
+```
+document.getElementById('btn2').addEventListener('click', () => {
+    // JSON 응답 받기
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(response => {
+        if (!response.ok) {
 
+        }
+        return response.json();// 데이터를 JSON 형식으로 파싱하고 이를 자바스크립트 객체로 변환해준다. 반환값은 Promise<자바스크립트 객체>. 반환값의 타입은 객체또는 배열
+      })// Promise를 return 하면 then()을 사용할 수 있다
+      // then을 통해 비동기 작업이 끝났을때 실행할 콜백함수를 등록한다
+      .then(jsonData => console.log(jsonData)); // jsonData는 일반 자바스크립트 객체나 배열 (파싱된 자바스크립트 객체를 받는 변수)
+
+      // 예외처리 제외한 축약 코드
+      fetch('https://jsonplaceholder.typicode.com/todos')
+        .then(response => response.json())
+        .then(jsonData => console.log(jsonData));
+  })
+```  
+
+##### response.json()
+- 데이터를 JSON 형식으로 파싱하고 이를 자바스크립트 객체로 변환
+- 반환값은 Promise<자바스크립트 객체>
+- 반환값의 타입은 객체또는 배열
