@@ -382,7 +382,8 @@
 
     return (
       <>
-        {visible && <Typing randText={randText} setIsDone={setIsDone}/>} // visible 값이 false가 되면 Typing 컴포넌트가 언마운트 돼면서 Typing 컴포넌트에 있는 useEffect의 return이 실행된다
+        {visible && <Typing randText={randText} setIsDone={setIsDone}/>// visible 값이 false가 되면 Typing 컴포넌트가 언마운트 돼면서 Typing 컴포넌트에 있는 useEffect의 return이 실행된다
+        } 
       </>
     )
   }
