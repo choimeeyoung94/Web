@@ -66,7 +66,7 @@
       )  
     }
         
-    ReactDOM.createRoot(document.getElementById('root1')).render(<Spin1 />);
+    //ReactDOM.createRoot(document.getElementById('root1')).render(<Spin1 />);
 
   }
 
@@ -101,7 +101,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root2')).render(<Spin2/>);
+  //ReactDOM.createRoot(document.getElementById('root2')).render(<Spin2/>);
 
   
   
@@ -133,7 +133,7 @@
     )
     
   }
-  ReactDOM.createRoot(document.getElementById('root3')).render(<InputComponent />);
+  //ReactDOM.createRoot(document.getElementById('root3')).render(<InputComponent />);
 </script>
 
 <hr>
@@ -162,7 +162,7 @@
 
     )
   }
-  ReactDOM.createRoot(document.getElementById('root4')).render(<CheckboxComponent />)
+  //ReactDOM.createRoot(document.getElementById('root4')).render(<CheckboxComponent />)
 </script>
 
 <hr>
@@ -195,7 +195,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root5')).render(< SelectedComponent />);
+  //ReactDOM.createRoot(document.getElementById('root5')).render(< SelectedComponent />);
 
 </script>
 
@@ -237,7 +237,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root6')).render(<LoginComponent />);
+  //ReactDOM.createRoot(document.getElementById('root6')).render(<LoginComponent />);
 </script>
 
 <hr>
@@ -298,7 +298,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root7')).render(<LoginComponent2 />);
+  //ReactDOM.createRoot(document.getElementById('root7')).render(<LoginComponent2 />);
 
 </script>
 <hr>
@@ -354,7 +354,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root8')).render(<AnimalComponent/>);
+  //ReactDOM.createRoot(document.getElementById('root8')).render(<AnimalComponent/>);
 
 </script>
 <hr>
@@ -366,7 +366,7 @@
     const [heart, setHeart] = React.useState('싫어요');
 
     const handleChange = (e) => {
-      setHeart(prev => prev === "좋아요" ? "싫어요" : "좋아요");
+      setHeart(prev => prev === "좋아요" ? "싫어요" : "좋아요");// 상태를 함수형으로 업데이트 하는 방식
     };
 
     return (
@@ -376,7 +376,7 @@
     );
   };
 
-  ReactDOM.createRoot(document.getElementById('root9')).render(<LikeComponent />);
+  //ReactDOM.createRoot(document.getElementById('root9')).render(<LikeComponent />);
 </script>
 <hr>
 <div id="root10"></div>
@@ -404,7 +404,7 @@
       </>
     )
   }
-  ReactDOM.createRoot(document.getElementById('root10')).render(<ArrayComponent/>);
+  //ReactDOM.createRoot(document.getElementById('root10')).render(<ArrayComponent/>);
 </script>
 <hr>
 <div id="root11"></div>
@@ -426,7 +426,7 @@
       </>
     )
   }
-  ReactDOM.createRoot(document.getElementById('root11')).render(<PhoneComponent />);
+  //ReactDOM.createRoot(document.getElementById('root11')).render(<PhoneComponent />);
 </script>
 <hr>
 <div id="root12"></div>
@@ -451,7 +451,7 @@
       </>
     )
   }
-  ReactDOM.createRoot(document.getElementById('root12')).render(<InputComponent2/>)
+  //ReactDOM.createRoot(document.getElementById('root12')).render(<InputComponent2/>)
   
 </script>
 <hr>
@@ -482,8 +482,54 @@
       </>
     )
   }
-  ReactDOM.createRoot(document.getElementById('root13')).render(<ButtonsComponent />);
+  //ReactDOM.createRoot(document.getElementById('root13')).render(<ButtonsComponent />);
 </script>
+<hr>
+<div id="root14"></div>
+<script type="text/babel">
+  // 연습) 추가 버튼을 누를때마다 화면에 <input> 태그를 새롭게 추가합니다.
+  //       각 <input> 태그에 입력한 값들은 state 배열에 저장합니다.
+  //       state 배열에 저장된 값들을 화면에 리스트 형식으로 출력하세요.
+  const CreateInput = () => {
+    const [values, setValues] = React.useState(['apple','banana']);
+
+    const valueChange = (e, i) => {
+      const changedValues = [...values];
+      changedValues[i] = e;
+      setValues(changedValues);
+    }
+
+    const handleClick = (e) => {
+      setValues([...values, '']);
+    }
+
+    return (
+      <>
+        <button onClick={handleClick}>Input 추가</button>
+        {
+          values.map((value, i) => ( //()는 return을 의미한다
+            <input key={i}
+                   value={value}
+                   onChange={e => valueChange(e.target.value, i)}// 이벤트 객체의 value 값을 전달해줬다 따라서 매개변수로 e.target.value로 받을 수 없다 
+                   style={{display: 'block'}}/>
+          ))
+        }
+        <ul>
+          {
+            values.map((value, i) => ( //()는 return을 의미한다
+              <li key={i}>{value}</li>
+            ))
+          }
+        </ul>
+      </>
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root14')).render(<CreateInput/>)
+</script>
+
+<hr>
+
+
 <hr>
 <div id="root15"></div>
 <script type="text/babel">
@@ -494,14 +540,44 @@
   // 이메일, 비밀번호, 유효성 검사 결과 모두 state로 관리해야 합니다
 
   const ValidateInput = () => {
+    const [inputEmail, setInputEmail] = React.useState('');
+    const [inputPassword, setInputPassword] = React.useState('');
+    const [inputPasswordCheckState, setInputPasswordCheckState] = React.useState(false);
+    const [inputEmailCheckState, setInputEmailCheckState] = React.useState(false);
+    
+    const passwordCheck = (e) => {
+      setInputPassword(e.target.value);
+    }
+
+    const emailCheck = (e) => {
+      setInputEmail(e.target.value);
+    }
+
+    const onValidate = (e) => {
+      if (inputPassword.length < 4) {
+        alert('비밀번호는 4자 이상입니다.');
+        setInputPasswordCheckState(false);
+      }
+      setInputPasswordCheckState(true);
+
+      let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailPattern.test(inputEmail)) {
+        alert('이메일 형식이 아닙니다.');
+        setInputEmailCheckState(false);
+      }
+      setInputEmailCheckState(true);
+    } 
 
     return (
       <>
-        <input type="email" placeholder="이메일을 입력하세요"/>
-        
+        <input type="email" placeholder="이메일을 입력하세요" value={inputEmail} onChange={emailCheck}/>
+        <input type="password" placeholder="비밀번호를 입력하세요" value={inputPassword} onChange={passwordCheck}/>
+        <button type="button" onClick={onValidate}>검증</button>
       </>
     )
   }
+  ReactDOM.createRoot(document.getElementById('root15')).render(<ValidateInput />);
 
 
 

@@ -246,7 +246,7 @@
         </>
       ) 
   }
-  ReactDOM.createRoot(document.getElementById('root4')).render(<Timer2 seconds={5}  />);
+ // ReactDOM.createRoot(document.getElementById('root4')).render(<Timer2 seconds={5}  />);
 </script>
 <hr>
 <div id="root5"></div>
@@ -269,7 +269,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root5')).render(<KeyLogger/>);
+ // ReactDOM.createRoot(document.getElementById('root5')).render(<KeyLogger/>);
 </script>
 <hr>
 <div id="root6"></div>
@@ -298,7 +298,7 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root6')).render(<WindowComponent />);
+ // ReactDOM.createRoot(document.getElementById('root6')).render(<WindowComponent />);
 
 
 </script>
@@ -322,17 +322,30 @@
     )
   }
 
-  ReactDOM.createRoot(document.getElementById('root7')).render(<FetchComponent/>)
+  //ReactDOM.createRoot(document.getElementById('root7')).render(<FetchComponent/>)
 </script>
 <hr>
 <div id="root8"></div>
 <script type="text/babel">
-  const WeatherComponen = () => {
-    React.useEffect(() => {
-      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={f9632afdb4ce9ba86879299eefc7ee76}`)
-    })
-  }
+  // 연습) 화면에 적당한 길이의 랜덤 문자열을 표시합니다. (window.crypto.randomUUID()를 활용해 보세요.)
+  //       문자열 아래에는 입력 상자를 배치합니다.
+  //       입력 상자에 랜덤 문자열을 그대로 입력합니다. 입력이 끝나면 Enter를 누르세요.
+  //       랜덤 문자열을 그대로 잘 입력하고 Enter를 누르면, 입력하는데 걸린 시간을 경고창에 출력하세요.
+  //       입력을 잘못한 뒤 Enter를 누르면, 아무 일도 일어나지 않도록 처리하세요.
 
+  const RandomUUID = () => {
+    const [randomUUid, setRandomUUid] = React.useState('');
+    React.useEffect(() => {
+      setRandomUUid(window.crypto.randomUUID())
+    },[])
+    return (
+      <>
+        <h1>{randomUUid}</h1>
+        <input type="text"  onKeyDown={(e) => activeEnter(e)}/>
+      </>
+    )
+  }
+  ReactDOM.createRoot(document.getElementById('root8')).render(<RandomUUID />);
 
 </script>
 
